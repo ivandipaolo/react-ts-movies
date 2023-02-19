@@ -1,10 +1,9 @@
-import React from "react";
-// import MovieCard from './components/MovieCard';
+import { Home } from "@/pages/Home";
 
 function App(): JSX.Element {
   return (
-    <div className="App">
-      {/* <MovieCard /> */}
+    <div className="app">
+      <Home />
     </div>
   );
 }
