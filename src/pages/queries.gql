@@ -1,7 +1,5 @@
 query getMovieById($movieId: Int!){
   movieDetail(id: $movieId) {
-    movie {
-      id
-    }
+    ok
   }
 }
