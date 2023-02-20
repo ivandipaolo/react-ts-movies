@@ -11,3 +11,18 @@ query getMovieById($movieId: Int!){
     }
   }
 }
+
+query getLatestReleases{
+  nowPlayingMovies {
+    movies{
+      id
+      release_date
+    }
+  }
+  popularMovies {
+    movies{
+      id
+      release_date
+    }
+  }
+}
