@@ -1,5 +1,13 @@
 query getMovieById($movieId: Int!){
   movieDetail(id: $movieId) {
-    ok
+    movie {
+        original_title
+        overview
+        poster_path
+        genres {
+          id
+          name
+        }
+    }
   }
 }
