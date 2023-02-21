@@ -1,5 +1,8 @@
 import { useQuery } from '@apollo/client'
 import { GetMovieByIdDocument, GetMovieByIdQuery, GetMovieByIdQueryVariables, Movie } from '@/graphql/queries';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '@/redux/hooks'
+import { addGenres } from '@/redux/slices/genresSlice';
 
 type MovieCardProps = {
   movieId: number;
@@ -10,13 +13,26 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
     variables: { movieId }
   });
 
-  const handleAddToFavorites = () => {
-    return;
-  };
-
   const movieDetail = data?.movieDetail;
   const movie: Partial<Movie> | undefined | null = movieDetail?.movie;
+  const dispatch = useAppDispatch()
 
+  
+  useEffect(() => {
+    if (movie?.genres) {
+      const genreNames = movie.genres.map((genre) => genre.name);
+      dispatch(addGenres(genreNames));
+    }
+  }, [dispatch, movie]);
+    
+  const handleAddToFavorites = () => {
+    return; // Todo
+  };
+
+  if (error) {
+    return <p>Error! {error.message}</p>
+  }
+  
   return (
     <>
       {

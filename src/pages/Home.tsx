@@ -1,10 +1,9 @@
-import {LatestReleases} from '../components/LatestReleases'
+import CategorySelector from '@/components/CategorySelector'
+import { LatestReleases } from '@/components/LatestReleases'
 
-export const Home = () => {
-
-  return (
-    <>
-      <LatestReleases/>
-    </>
-  )
-}
+export const Home = () => (
+  <>
+    <LatestReleases />
+    <CategorySelector />
+  </>
+)

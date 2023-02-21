@@ -3,7 +3,7 @@ import { GetLatestReleasesDocument } from '../graphql/queries';
 import { useEffect, useState } from 'react';
 import HorizontalLayout from "./HorizontalLayout/HorizontalLayout";
 
-export const LatestReleases = () => {
+export function LatestReleases(): JSX.Element {
   const { loading, error, data } = useQuery(GetLatestReleasesDocument);
   const [latestMovies, setLatestMovies] = useState([]);
 
@@ -19,12 +19,12 @@ export const LatestReleases = () => {
   }
 
   if (error) {
-    return `Error! ${error}`;
+    return <p>Error! {error.message}</p>
   }
 
   return (
     <div className="">
-      <HorizontalLayout title='Latest Releases' listedIds={latestMovies}/>
+      <HorizontalLayout title='Latest Releases' listedIds={latestMovies} />
     </div>
-  )
+  );
 }

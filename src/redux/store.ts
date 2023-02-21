@@ -1,7 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import genresSlice from './slices/genresSlice';
 
 export const store = configureStore({
   reducer: {
+    genres: genresSlice
   },
 });
 
