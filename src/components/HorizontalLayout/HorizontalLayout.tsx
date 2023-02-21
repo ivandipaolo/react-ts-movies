@@ -1,13 +1,12 @@
-import { Movie } from "@/graphql/queries";
 import { MovieCard } from "../MovieCard";
 import { useState, useEffect, useRef } from 'react';
 
 type HorizontalLayoutProps = {
   title: string
-  listedIds: Movie[]
+  listedIds: number[]
 }
 
-function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
+export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
   const [layoutWidth, setLayoutWidth] = useState(0);
   const [layoutLeftScroll, setLayoutLeftScroll] = useState(0);
   const [layoutRightScroll, setLayoutRightScroll] = useState(0);
@@ -42,8 +41,8 @@ function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
         <div className="flex flex-nowrap lg:ml-10 md:ml-20 ml-10">
           <div className="flex flex-row gap-2 overflow-x-auto ml-2 mr-2" ref={moviesWrapperRef}>
             { listedIds.length > 0 
-            ? listedIds.slice(0, 15).map((movie: Movie) => (
-                <MovieCard key={movie.id} movieId={movie.id}/>
+            ? listedIds.slice(0, 15).map((id: number) => (
+                <MovieCard key={id} movieId={id}/>
               ))
               : <></>
             }
@@ -57,5 +56,3 @@ function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
     </div>
   );
 }
-
-export default HorizontalLayout;

@@ -3,7 +3,10 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/redux/store'
 
 interface GenresState {
-  value: string[]
+  value: {
+    id: number,
+    genres: string[]
+  }[]
 }
 
 const initialState: GenresState = {
@@ -14,8 +17,11 @@ export const genresSlice = createSlice({
   name: 'genres',
   initialState,
   reducers: {
-    addGenres: (state: GenresState, action: PayloadAction<string[]>) => {
-      state.value = [...new Set(state.value.concat(action.payload))]
+    addGenres: (state: GenresState, action: PayloadAction<{id: number, genres: string[]}>) => {
+      const { id, genres } = action.payload;
+      const alreadyExists = state.value.some(item => item.id === id);
+      if (alreadyExists) return;
+      state.value.push({ id, genres });
     }
   },
 })

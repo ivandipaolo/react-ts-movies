@@ -1,17 +1,11 @@
-import { Movie } from '@/graphql/queries';
-import  { useState } from 'react';
-import { GetLatestReleasesDocument } from '../graphql/queries';
-import { useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { useAppSelector } from '@/redux/hooks';
+import { HorizontalLayout } from '@/components/HorizontalLayout';
 
 interface CategoryOption {
   label: string;
   value: string;
-}
-
-interface CategoryProps {
-  movies: Movie[];
 }
 
 const CategorySelector = () => {
@@ -19,44 +13,30 @@ const CategorySelector = () => {
   // while movies genres cant be null.
   // [GraphQL error]: Message: Cannot return null for non-nullable field Movie.genres.
   // Location: [object Object], Path: nowPlayingMovies,movies,0,genres
-  const { loading, error, data } = useQuery(GetLatestReleasesDocument);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryOption | null>(null);
-  const genres = useAppSelector((state) => state.genres.value)
+  const availableGenres = useAppSelector((state) => state.genres.value)
+  const allAvailableMovies = useAppSelector((state) => state.availableMovies.value)
+  const selectedCategoryInitialState = {label: 'Select Genre', value: 'All'};
+  const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(selectedCategoryInitialState);
+  const [moviesWithGenreIds, setMoviesWithGenreIds] = useState<number[]>(allAvailableMovies);
+  // const genres = useAppSelector((state) => state.genres.value)
+  const uniqueGenres = Array.from(new Set(availableGenres.map((movie) => movie.genres).flat()))
 
+  useEffect(() => {
+    if (selectedCategory.value !== 'All') {
+      setMoviesWithGenreIds(availableGenres.filter((movie) => movie.genres.includes(selectedCategory.value)).map((movie) => movie.id))
+    } else {
+      setMoviesWithGenreIds(allAvailableMovies);
+    }
+  }, [allAvailableMovies, availableGenres, selectedCategory])
   
-
-  // const categories = Array.from(new Set(movies.map((movie) => movie.category))).map(
-  //   (category) => ({ label: category, value: category })
-  // );
-
-  // const filteredMovies = selectedCategory
-  //   ? movies.filter((movie) => movie.category === selectedCategory.value)
-  //   : movies;
-
-  if (loading) {
-    //Todo add loading template to horizsontal layout
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error! {error.message}</p>
-  }
-
   return (
     <div>
       <Select
-        options={genres.map((genre) => ({ label: genre, value: genre}))}
+        options={uniqueGenres.map((genre) => ({ label: genre, value: genre}))}
         value={selectedCategory}
-        onChange={(selectedOption: CategoryOption | null) => setSelectedCategory(selectedOption)}
+        onChange={(selectedOption: CategoryOption | null) => {selectedOption ? setSelectedCategory(selectedOption) : setSelectedCategory(selectedCategoryInitialState)}}
       />
-
-      <ul>
-        {/* {filteredMovies.map((movie) => (
-          <li key={movie.title}>
-            <p>{movie.title}</p>
-          </li>
-        ))} */}
-      </ul>
+      <HorizontalLayout title='Latest Releases' listedIds={moviesWithGenreIds} />
     </div>
   );
 };

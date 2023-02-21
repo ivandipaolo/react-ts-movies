@@ -1,6 +1,7 @@
 query getMovieById($movieId: Int!){
   movieDetail(id: $movieId) {
     movie {
+      id
       original_title
       overview
       poster_path
@@ -12,7 +13,7 @@ query getMovieById($movieId: Int!){
   }
 }
 
-query getLatestReleases{
+query getAvailableMovies{
   nowPlayingMovies {
     movies{
       id
