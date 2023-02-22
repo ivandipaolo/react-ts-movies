@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.8",
+    "@headlessui/react": "^1.7.11",
     "apollo-boost": "^0.4.9",
     "graphql": "^16.6.0",
     "react": "^18",
