@@ -7,7 +7,6 @@ import { useAppDispatch } from '@/redux/hooks';
 import { CategorySection } from '@/components/CategorySection';
 import { LatestReleasesSection } from '@/components/LatestReleasesSection';
 import { SearchSection } from '@/components/SearchSection';
-import { Navbar } from '@/components/NavBar';
 
 import { GetAvailableMoviesDocument, Movie } from '@/graphql/queries';
 
@@ -23,11 +22,10 @@ export const Home = () => {
     }
   }, [dispatch, data]);
   return (
-  <>
-    <Navbar/>
+  <div>
     <LatestReleasesSection />
     <CategorySection />
     <SearchSection />
-  </>
+  </div>
   )
 }
