@@ -38,6 +38,7 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
         { window.innerWidth < layoutWidth && layoutLeftScroll > 0
           ? <div className="fixed z-10 flex w-[4em] left-0 h-[18rem] bg-transparent bg-gradient-to-r from-purple-800"><span className="m-auto cursor-default text-white">{'<'}</span></div>   
           : <></>
+          //Todo arreglar fixed
         }
         <div className="flex flex-nowrap lg:ml-10 md:ml-20 ml-10">
           <div className="flex flex-row gap-2 overflow-x-auto ml-2 mr-2" ref={moviesWrapperRef}>
@@ -52,6 +53,7 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
         { window.innerWidth < layoutWidth && layoutRightScroll !== layoutLeftScroll
           ? <div className="fixed z-10 flex w-[4em] right-0 h-[18rem] bg-transparent bg-gradient-to-l from-purple-800"><span className="m-auto cursor-default text-white">{'>'}</span></div>   
           : <></>
+          //Todo arreglar fixed
         }
       </div>
     </div>

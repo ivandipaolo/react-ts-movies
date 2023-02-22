@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { HorizontalLayout } from './HorizontalLayout';
 
@@ -7,7 +7,12 @@ export const SearchSection = () => {
   const availableMoviesIds = useAppSelector((state) => state.availableMovies.value)
   const [noResults, setNoResults] = useState(false);
   const [query, setQuery] = useState('');
-  const [searchValue, setSearchValue] = useState<number[]>(availableMoviesIds);
+  const [searchValue, setSearchValue] = useState<number[]>([]);
+
+  useEffect(() => {
+    setSearchValue(availableMoviesIds);
+  }, [availableMoviesIds])
+  
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,19 +57,13 @@ export const SearchSection = () => {
               onChange={handleQueryChange}
               required
             />
-            <button
-              type="submit"
-              className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Search
-            </button>
           </div>
         </form>
       {
         noResults
         ? <div>
             <h2>There is no results for:<span>{query}</span></h2>
-            {/* Condicion para ver si tiene favoritas o no, si tiene hacer similar movies*/}
+            {/*Todo: Condicion para ver si tiene favoritas o no, si tiene hacer similar movies*/}
             <h2>Here you have some similar movies based on your favorite movies.</h2>
           </div>
         : <></>

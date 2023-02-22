@@ -15,7 +15,7 @@ const CategorySection = () => {
   // Location: [object Object], Path: nowPlayingMovies,movies,0,genres
   const availableGenres = useAppSelector((state) => state.detailedMovies.value)
   const allAvailableMovies = useAppSelector((state) => state.availableMovies.value)
-  const selectedCategoryInitialState = {label: 'Select your favorite Genre', value: 'All'};
+  const selectedCategoryInitialState = {label: 'Select a Genre', value: 'All'};
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(selectedCategoryInitialState);
   const [moviesWithGenreIds, setMoviesWithGenreIds] = useState<number[]>(allAvailableMovies);
   // const genres = useAppSelector((state) => state.genres.value)
