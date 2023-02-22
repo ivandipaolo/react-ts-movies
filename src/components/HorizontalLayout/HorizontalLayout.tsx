@@ -7,16 +7,18 @@ type HorizontalLayoutProps = {
 }
 
 export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
-  const [layoutWidth, setLayoutWidth] = useState(0);
+  const [layoutWidth, setLayoutWidth] = useState(window.innerWidth);
   const [layoutLeftScroll, setLayoutLeftScroll] = useState(0);
   const [layoutRightScroll, setLayoutRightScroll] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const moviesWrapperRef = useRef<HTMLDivElement | null>(null);
+  const moviesWrapperRef = useRef<HTMLDivElement>(document.createElement('div'));
   const generalWrapperRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (moviesWrapperRef.current) {
       setLayoutWidth(parseInt(getComputedStyle(moviesWrapperRef.current).width));
+      setLoading(false);
     }
   }, [moviesWrapperRef.current?.scrollWidth, listedIds.length]);
   
@@ -27,6 +29,29 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
     }
   }
 
+  function HorizontalLayoutLoader() {
+    return (
+      <div className="flex flex-col m-auto p-auto">
+        <h1 className="flex py-5 lg:px-3 md:px-10 px-5 lg:mx-8 md:mx-10 mx-5 font-bold text-4xl dark:text-white text-gray-700">
+          Loading...
+        </h1>
+        <div className="flex overflow-x-scroll pb-10 no-scrollbar">
+          <div className="flex flex-nowrap lg:ml-10 md:ml-20 ml-10">
+            <div className="flex flex-row gap-2 overflow-x-auto ml-2 mr-2">
+              {Array.from({ length: 15 }).map((_, index) => (
+                <div key={index} className="w-44 h-64 bg-gray-200 rounded-lg animate-pulse"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
+  if (loading) {
+    return <HorizontalLayoutLoader />;
+  }
 
   return (
     <div className="flex flex-col m-auto p-auto">

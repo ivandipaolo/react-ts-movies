@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '@/redux/hooks'
 import { addDetailedMovie } from '@/redux/slices/detailedMoviesSlice';
 import { setSelectSelectedMovie } from '@/redux/slices/selectedMovieSlice';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type MovieCardProps = {
   movieId: number;
@@ -50,7 +50,11 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
         //Todo: add loading tempalte
       }
       {loading ? (
-        <p>loading...</p>
+        <div className="relative group w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none animate-pulse">
+          <div className="absolute inset-0 bg-gray-400 rounded-md flex items-center justify-center">
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status"></div>
+          </div>
+        </div>
       ) : (
         <div className="relative group w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none">
           {/* Todo: bajar resolucion a imagenes */}
