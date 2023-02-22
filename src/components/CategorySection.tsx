@@ -8,12 +8,12 @@ interface CategoryOption {
   value: string;
 }
 
-const CategorySelector = () => {
+const CategorySection = () => {
   // I have to use this query because the nowPlayingMovies && popularMovies return null from movies genres
   // while movies genres cant be null.
   // [GraphQL error]: Message: Cannot return null for non-nullable field Movie.genres.
   // Location: [object Object], Path: nowPlayingMovies,movies,0,genres
-  const availableGenres = useAppSelector((state) => state.genres.value)
+  const availableGenres = useAppSelector((state) => state.detailedMovies.value)
   const allAvailableMovies = useAppSelector((state) => state.availableMovies.value)
   const selectedCategoryInitialState = {label: 'Select your favorite Genre', value: 'All'};
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(selectedCategoryInitialState);
@@ -35,7 +35,7 @@ const CategorySelector = () => {
   return (
     <div>
       <Select
-        className="lg:w-[20rem] md:w-[12em] sm:w-2 lg:ml-[3rem] md:ml-20 sm:ml-10 p-auto"
+        className="max-w-2xl mx-auto p-auto"
         options={uniqueGenres.map((genre) => ({ label: genre, value: genre})).sort((a, b) => a.label.localeCompare(b.label))}
         value={selectedCategory}
         onChange={(selectedOption: CategoryOption | null) => {selectedOption ? setSelectedCategory(selectedOption) : setSelectedCategory(selectedCategoryInitialState)}}
@@ -45,4 +45,4 @@ const CategorySelector = () => {
   );
 };
 
-export default CategorySelector;
+export default CategorySection;

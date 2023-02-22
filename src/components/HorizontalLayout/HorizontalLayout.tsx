@@ -2,7 +2,7 @@ import { MovieCard } from "../MovieCard";
 import { useState, useEffect, useRef } from 'react';
 
 type HorizontalLayoutProps = {
-  title: string
+  title?: string
   listedIds: number[]
 }
 
@@ -18,7 +18,7 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
     if (moviesWrapperRef.current) {
       setLayoutWidth(parseInt(getComputedStyle(moviesWrapperRef.current).width));
     }
-  }, [moviesWrapperRef.current?.scrollWidth]);
+  }, [moviesWrapperRef.current?.scrollWidth, listedIds.length]);
   
   const handleScroll = () => {
     if (generalWrapperRef.current) {
