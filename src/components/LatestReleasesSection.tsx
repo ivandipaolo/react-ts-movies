@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { HorizontalLayout } from "@/components/HorizontalLayout";
 import { useAppSelector } from "@/redux/hooks";
 
-export function LatestReleases(): JSX.Element {
+export function LatestReleasesSection(): JSX.Element {
   const [latestMovies, setLatestMovies] = useState<number[]>([]);
   const availableMovies = useAppSelector((state) => state.availableMovies.value)
 

@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client'
-import { Genre, GetMovieByIdDocument, GetMovieByIdQuery, GetMovieByIdQueryVariables, Movie } from '@/graphql/queries';
+import { GetMovieByIdDocument, GetMovieByIdQuery, GetMovieByIdQueryVariables, Movie } from '@/graphql/queries';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/redux/hooks'
-import { addGenres } from '@/redux/slices/genresSlice';
+import { addDetailedMovie } from '@/redux/slices/detailedMoviesSlice';
 
 type MovieCardProps = {
   movieId: number;
@@ -19,9 +19,9 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
 
   
   useEffect(() => {
-    if (movie?.id && movie?.genres) {
-      const payload = { id: movie.id, genres: movie.genres?.map((genre) => genre.name) };
-      dispatch(addGenres(payload));
+    if (movie?.id && movie?.genres && movie?.original_title) {
+      const payload = { id: movie.id, genres: movie.genres?.map((genre) => genre.name), name: movie.original_title };
+      dispatch(addDetailedMovie(payload));
     }
   }, [data, dispatch, movie]);
     
