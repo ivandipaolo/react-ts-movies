@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 import { addMovies } from '@/redux/slices/availableMoviesSlice';
 import { useAppDispatch } from '@/redux/hooks';
 
-import CategorySection from '@/components/CategorySection';
+import { CategorySection } from '@/components/CategorySection';
 import { LatestReleasesSection } from '@/components/LatestReleasesSection';
 import { SearchSection } from '@/components/SearchSection';
 
@@ -22,10 +22,10 @@ export const Home = () => {
     }
   }, [dispatch, data]);
   return (
-  <>
+  <div>
     <LatestReleasesSection />
     <CategorySection />
     <SearchSection />
-  </>
+  </div>
   )
 }

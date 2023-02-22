@@ -3,6 +3,8 @@ import { GetMovieByIdDocument, GetMovieByIdQuery, GetMovieByIdQueryVariables, Mo
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/redux/hooks'
 import { addDetailedMovie } from '@/redux/slices/detailedMoviesSlice';
+import { setSelectSelectedMovie } from '@/redux/slices/selectedMovieSlice';
+import { redirect, useNavigate } from 'react-router-dom';
 
 type MovieCardProps = {
   movieId: number;
@@ -16,6 +18,7 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
   const movieDetail = data?.movieDetail;
   const movie: Partial<Movie> | undefined | null = movieDetail?.movie;
   const dispatch = useAppDispatch()
+  const navigate = useNavigate();
 
   
   useEffect(() => {
@@ -29,6 +32,13 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
     return; // Todo
   };
 
+  const handleSelectedMovie = (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (movie?.id) {
+      dispatch(setSelectSelectedMovie(movie.id))
+      navigate('/movieDetails')
+    }
+  }
   if (error) {
     return <p>Error! {error.message}</p>
   }
@@ -42,10 +52,11 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
       {loading ? (
         <p>loading...</p>
       ) : (
-        <div className="relative group w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none ">
+        <div className="relative group w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none">
+          {/* Todo: bajar resolucion a imagenes */}
           <img className="object-cover w-full h-full transform duration-700 backdrop-opacity-200 " src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie?.poster_path}` || ''} alt='Movie poster.'/>
           <div className="absolute w-full h-full shadow-2xl opacity-20 transform duration-500 inset-y-full group-hover:-inset-y-0"></div>
-          <div className="absolute bg-gradient-to-t  from-purple-800 w-full via-black h-full transform duration-500 inset-y-3/4 group-hover:-inset-y-0">
+          <div className="absolute bg-gradient-to-t  from-blue-800 w-full via-black h-full transform duration-500 inset-y-3/4 group-hover:-inset-y-0">
             <div className="absolute w-full h-[4rem] flex flex-col gap-1 place-content-center">
               <p className="capitalize font-bold text-xs text-center shadow-2xl text-white mb-2">{movie?.original_title}</p>
               {
@@ -63,7 +74,7 @@ const MovieCard = ({ movieId }: MovieCardProps) => {
             <div className="absolute w-full flex place-content-center mt-[5rem]">
               <p className="text-xs font-sans w-full p-2 text-white">{movie?.overview?.substring(0,215)}{movie?.overview && movie?.overview.length > 215 ? '...' : ''}</p>
             </div>
-            <button onClick={handleAddToFavorites} className="absolute left-[12%] bottom-5 bg-gray-100 bg-opacity-10 text-white font-semibold rounded h-[1.5rem] w-[9rem] hover:bg-gray-400 hover:bg-opacity-10 text-sm">
+            <button onClick={handleSelectedMovie} tabIndex={-1} className="absolute left-[12%] bottom-5 bg-gray-100 bg-opacity-10 text-white font-semibold rounded h-[1.5rem] w-[9rem] hover:bg-gray-400 hover:bg-opacity-10 text-sm">
                 Show more
             </button>
           </div>

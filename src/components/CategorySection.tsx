@@ -8,7 +8,7 @@ interface CategoryOption {
   value: string;
 }
 
-const CategorySection = () => {
+export const CategorySection = () => {
   // I have to use this query because the nowPlayingMovies && popularMovies return null from movies genres
   // while movies genres cant be null.
   // [GraphQL error]: Message: Cannot return null for non-nullable field Movie.genres.
@@ -44,5 +44,3 @@ const CategorySection = () => {
     </div>
   );
 };
-
-export default CategorySection;

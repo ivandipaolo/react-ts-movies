@@ -3,8 +3,8 @@ import App from "@/App";
 
 import '@/index.css'
 
-import { createRoot } from 'react-dom/client';
 
+import { createRoot } from 'react-dom/client';
 import createApolloClient from '@/apolloClient';
 import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
@@ -19,11 +19,11 @@ const root = createRoot(rootElement!);
 
 
 root.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ApolloProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ApolloProvider>
+    </React.StrictMode>
 );
