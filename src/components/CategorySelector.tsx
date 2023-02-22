@@ -15,7 +15,7 @@ const CategorySelector = () => {
   // Location: [object Object], Path: nowPlayingMovies,movies,0,genres
   const availableGenres = useAppSelector((state) => state.genres.value)
   const allAvailableMovies = useAppSelector((state) => state.availableMovies.value)
-  const selectedCategoryInitialState = {label: 'Select Genre', value: 'All'};
+  const selectedCategoryInitialState = {label: 'Select your favorite Genre', value: 'All'};
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(selectedCategoryInitialState);
   const [moviesWithGenreIds, setMoviesWithGenreIds] = useState<number[]>(allAvailableMovies);
   // const genres = useAppSelector((state) => state.genres.value)
@@ -25,18 +25,22 @@ const CategorySelector = () => {
     if (selectedCategory.value !== 'All') {
       setMoviesWithGenreIds(availableGenres.filter((movie) => movie.genres.includes(selectedCategory.value)).map((movie) => movie.id))
     } else {
-      setMoviesWithGenreIds(allAvailableMovies);
+      setMoviesWithGenreIds(allAvailableMovies.map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value));
     }
-  }, [allAvailableMovies, availableGenres, selectedCategory])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allAvailableMovies, selectedCategory])
   
   return (
     <div>
       <Select
-        options={uniqueGenres.map((genre) => ({ label: genre, value: genre}))}
+        className="lg:w-[20rem] md:w-[12em] sm:w-2 lg:ml-[3rem] md:ml-20 sm:ml-10 p-auto"
+        options={uniqueGenres.map((genre) => ({ label: genre, value: genre})).sort((a, b) => a.label.localeCompare(b.label))}
         value={selectedCategory}
         onChange={(selectedOption: CategoryOption | null) => {selectedOption ? setSelectedCategory(selectedOption) : setSelectedCategory(selectedCategoryInitialState)}}
       />
-      <HorizontalLayout title='Latest Releases' listedIds={moviesWithGenreIds} />
+      <HorizontalLayout listedIds={moviesWithGenreIds} />
     </div>
   );
 };
