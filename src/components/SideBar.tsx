@@ -2,7 +2,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Sidebar() {
+export function Sidebar() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
 
