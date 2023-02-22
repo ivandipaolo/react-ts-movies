@@ -1,18 +1,19 @@
 query getMovieById($movieId: Int!){
   movieDetail(id: $movieId) {
     movie {
-        original_title
-        overview
-        poster_path
-        genres {
-          id
-          name
-        }
+      id
+      original_title
+      overview
+      poster_path
+      genres {
+        id
+        name
+      }
     }
   }
 }
 
-query getLatestReleases{
+query getAvailableMovies{
   nowPlayingMovies {
     movies{
       id
@@ -26,3 +27,28 @@ query getLatestReleases{
     }
   }
 }
+
+
+#Error while trying to get the movies genres into nowPlayingMovies query and popularMovies query
+#[GraphQL error]: Message: Cannot return null for non-nullable field Movie.genres.
+#Location: [object Object], Path: nowPlayingMovies,movies,0,genres
+# query GetGenresForMovies{
+#   nowPlayingMovies {
+#     movies{
+#       id
+#       genres {
+#         id
+#         name
+#       }
+#     }
+#   }
+#   popularMovies {
+#     movies{
+#       id
+#       genres {
+#         id
+#         name
+#       }
+#     }
+#   }
+# }

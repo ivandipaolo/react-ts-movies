@@ -1,13 +1,12 @@
-import { Movie } from "@/graphql/queries";
 import { MovieCard } from "../MovieCard";
 import { useState, useEffect, useRef } from 'react';
 
 type HorizontalLayoutProps = {
   title: string
-  listedIds: Movie[]
+  listedIds: number[]
 }
 
-function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
+export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
   const [layoutWidth, setLayoutWidth] = useState(0);
   const [layoutLeftScroll, setLayoutLeftScroll] = useState(0);
   const [layoutRightScroll, setLayoutRightScroll] = useState(0);
@@ -19,7 +18,7 @@ function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
     if (moviesWrapperRef.current) {
       setLayoutWidth(parseInt(getComputedStyle(moviesWrapperRef.current).width));
     }
-  }, [listedIds]);
+  }, [moviesWrapperRef.current?.scrollWidth]);
   
   const handleScroll = () => {
     if (generalWrapperRef.current) {
@@ -31,10 +30,11 @@ function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
 
   return (
     <div className="flex flex-col bg-white m-auto p-auto">
-      <h1 className="flex py-5 lg:px-3 md:px-10 px-5 lg:mx-40 md:mx-20 mx-5 font-bold text-4xl text-gray-800">
+      <h1 className="flex py-5 lg:px-3 md:px-10 px-5 lg:mx-8 md:mx-10 mx-5 font-bold text-4xl text-gray-800">
         {title}
       </h1>
-      <div className="flex overflow-x-scroll  no-scrollbar" ref={generalWrapperRef} onScroll={() => handleScroll()}>
+      <slot/>
+      <div className="flex overflow-x-scroll pb-10 no-scrollbar" ref={generalWrapperRef} onScroll={() => handleScroll()}>
         { window.innerWidth < layoutWidth && layoutLeftScroll > 0
           ? <div className="fixed z-10 flex w-[4em] left-0 h-[18rem] bg-transparent bg-gradient-to-r from-purple-800"><span className="m-auto cursor-default text-white">{'<'}</span></div>   
           : <></>
@@ -42,8 +42,8 @@ function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
         <div className="flex flex-nowrap lg:ml-10 md:ml-20 ml-10">
           <div className="flex flex-row gap-2 overflow-x-auto ml-2 mr-2" ref={moviesWrapperRef}>
             { listedIds.length > 0 
-            ? listedIds.slice(0, 15).map((movie: Movie) => (
-                <MovieCard key={movie.id} movieId={movie.id}/>
+            ? listedIds.slice(0, 15).map((id: number) => (
+                <MovieCard key={id} movieId={id}/>
               ))
               : <></>
             }
@@ -57,5 +57,3 @@ function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
     </div>
   );
 }
-
-export default HorizontalLayout;
