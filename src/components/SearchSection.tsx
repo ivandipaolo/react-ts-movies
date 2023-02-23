@@ -5,12 +5,13 @@ import { HorizontalLayout } from './HorizontalLayout';
 export const SearchSection = () => {
   const availableMovies = useAppSelector((state) => state.detailedMovies.value)
   const availableMoviesIds = useAppSelector((state) => state.availableMovies.value)
+  const searchBoxFromSlice = useAppSelector((state) => state.searchValue.value)
   const [noResults, setNoResults] = useState(false);
   const [query, setQuery] = useState('');
-  const [searchValue, setSearchValue] = useState<number[]>([]);
+  const [searchBoxValue, setSearchBoxValue] = useState<number[]>([]);
 
   useEffect(() => {
-    setSearchValue(availableMoviesIds);
+    setSearchBoxValue(availableMoviesIds);
   }, [availableMoviesIds])
   
 
@@ -22,10 +23,10 @@ export const SearchSection = () => {
     setQuery(event.target.value);
     if(availableMovies.filter((movie) => movie.name.toLowerCase().includes(event.target.value.toLowerCase())).length > 0) {
       setNoResults(false)
-      setSearchValue(availableMovies.filter((movie) =>  movie.name.toLowerCase().includes(event.target.value.toLowerCase())).map((movie) => movie.id))
+      setSearchBoxValue(availableMovies.filter((movie) =>  movie.name.toLowerCase().includes(event.target.value.toLowerCase())).map((movie) => movie.id))
     } else {
       setNoResults(true)
-      setSearchValue(availableMoviesIds);
+      setSearchBoxValue(availableMoviesIds);
     }
   }
 
@@ -69,7 +70,7 @@ export const SearchSection = () => {
         : <></>
       }
       </div>
-      <HorizontalLayout listedIds={searchValue}/>
+      <HorizontalLayout listedIds={searchBoxValue}/>
     </>
   );
 };
