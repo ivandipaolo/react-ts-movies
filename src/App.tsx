@@ -14,14 +14,13 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       <section className={`min-h-screen light:bg-white dark:bg-gray-900`}>
-      {/* <section className="min-h-screen flex lg:flex-row sm:flex-col md:flex-col light:bg-white dark:bg-gray-900"> */}
-        {menu}
         <div className="overflow-x-hidden lg:ml-[20rem] sm:ml-0">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/movieDetails" element={<MovieDetails />} />
           </Routes>
         </div>
+        {menu}
       </section>
     </BrowserRouter>
   );
