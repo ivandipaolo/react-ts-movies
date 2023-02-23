@@ -2,21 +2,42 @@ import { useAppSelector } from "@/redux/hooks";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { SearchBox } from '@/components/SearchBox';
+import { MovieCard } from "./MovieCard";
 
 export function Sidebar() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
+  const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value)
 
   const toggleSubMenu = () => {
     setIsSubMenuOpen(!isSubMenuOpen);
   };
-
+  
+  const menuIconPaths = {
+    open: (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M6 18L18 6M6 6l12 12"/>
+    ),
+    closed: (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M4 6h16M4 12h16M4 18h16"/>
+    ),
+  };
   return (
     <>
-      <div className="fixed z-50 top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900">
+      <div className="fixed z-50 top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 no-scrollbar">
         <div className="text-gray-100 text-xl">
           <div className="p-2.5 mt-1 flex items-center">
-            <i className="px-2 py-1 rounded-md bg-blue-600"></i>
+            <img 
+            className="w-10"
+            src="https://images.squarespace-cdn.com/content/v1/546bda42e4b02689ea84e659/1434908135361-GF5OZKCX107Q6XNSVZAS/vietnamwarfilm?format=1000w" 
+            alt="logo" />
             <h1 className="font-bold text-gray-200 text-[15px] ml-3">Movies Center</h1>
           </div>
           <div className="my-2 bg-gray-600 h-[1px]"></div>
@@ -42,17 +63,34 @@ export function Sidebar() {
           onClick={toggleSubMenu}>
           <div className="flex justify-between w-full items-center">
             <span className="text-[15px] ml-4 text-gray-200 font-bold">Favorite Movies</span>
-            <span className={`text-sm ${isSubMenuOpen ? "rotate-180" : ""}`} id="arrow">
-              <i className="bi "></i>
+            <span className='text-sm'>
+              <svg
+                className="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true">
+                {isSubMenuOpen ? menuIconPaths.open : menuIconPaths.closed}
+              </svg>
             </span>
           </div>
         </div>
-        <div
-          className={`text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold ${isSubMenuOpen ? "" : "hidden"}`}
+        <div 
+          className={`flex flex-col text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold gap-2 ${isSubMenuOpen ? "" : "hidden"}`}
           id="submenu">
-          <h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
-            Movie 1
-          </h1>
+            { favoriteMovies.length > 0 
+              ? favoriteMovies.map((movie) => (
+                <div key={movie.id} className="p-3 bg-gray-800 duration-300 hover:bg-gray-600 bg-opacity-95 rounded-md pb-5">
+                  <MovieCard movieId={movie.id} detailed={false}/>
+                </div>
+                ))
+              : 
+              <div className="mt-2 text-xs flex flex-col gap-2">
+                <p>No favorite movies on your list</p>
+                <p>You can add one by pressing the star on the movies.</p>
+              </div>
+            }
         </div>
       </div>
     </>
