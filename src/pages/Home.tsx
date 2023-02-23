@@ -29,11 +29,9 @@ export const Home = () => {
       ?
         <SearchSection />
       :
-      <>
         <LatestReleasesSection />
-        <CategorySection />
-      </>
-    }
+      }
+      <CategorySection />
   </div>
   )
 }
