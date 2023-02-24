@@ -79,7 +79,7 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
                   <p className="text-xs font-sans w-full p-2 text-white">{movie?.overview?.substring(0,195)}{movie?.overview && movie?.overview.length > 195 ? '...' : ''}</p>
                 </div>
                 <div className='absolute right-5 bottom-12'>
-                  <FavoriteStar movieId={movieId} movieName={movie?.original_title ?? ''}/>
+                  <FavoriteStar movieId={movieId}/>
                 </div>
                 <button onClick={handleSelectedMovie} tabIndex={-1} className="absolute left-[12%] bottom-5 bg-gray-100 bg-opacity-10 text-white font-semibold rounded h-[1.5rem] w-[9rem] hover:bg-gray-400 hover:bg-opacity-10 text-sm">
                     Show more
@@ -89,8 +89,8 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
         </div>
         : <div className='flex flex-col items-center align-middle justify-center cursor-pointer' onClick={handleSelectedMovie}>
             <div className='flex flex-row justify-betweens items-center align-middle gap-2 text-center'>
-              <p className="capitalize font-bold text-md text-center shadow-2xl text-white m-1 mb-2">{movie?.original_title}</p>
-              <FavoriteStar movieId={movieId} movieName={movie?.original_title || ''}/>
+              <p className="capitalize font-bold text-md text-center lg:pt-1 shadow-2xl text-white m-1 mb-2">{movie?.original_title}</p>
+              <FavoriteStar movieId={movieId} />
             </div>
             <div className="relative w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none">
               <img className='object-cover w-full h-full transform duration-700 backdrop-opacity-200' src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie?.poster_path}` || ''} alt='Movie poster.'/>
