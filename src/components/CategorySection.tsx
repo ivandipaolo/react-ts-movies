@@ -34,6 +34,9 @@ export const CategorySection = () => {
   
   return (
     <div>
+      <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-2xl lg:text-4xl dark:text-white text-gray-700">
+        Filter by genre:
+      </h1>
       <Select
         className="lg:max-w-2xl w-3/4 lg:ml-10 sm:ml-1 ml-2 p-auto"
         options={uniqueGenres.map((genre) => ({ label: genre, value: genre})).sort((a, b) => a.label.localeCompare(b.label))}

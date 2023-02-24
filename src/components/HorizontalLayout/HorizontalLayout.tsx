@@ -54,8 +54,8 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
   }
 
   return (
-    <div className="flex flex-col m-auto p-auto">
-      <h1 className="flex py-5 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-4xl dark:text-white text-gray-700">
+    <div className="flex flex-col m-auto p-auto mb-2">
+      <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-2xl lg:text-4xl dark:text-white text-gray-700">
         {title}
       </h1>
       <slot/>
@@ -66,7 +66,7 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
           //Todo arreglar fixed
         }
         <div className="flex flex-nowrap lg:ml-10 md:ml-20 sm:ml-2">
-          <div className="flex flex-row gap-2 overflow-x-auto ml-2 mr-2" ref={moviesWrapperRef}>
+          <div className="flex flex-row gap-2 overflow-x-auto mx-2" ref={moviesWrapperRef}>
             { listedIds.length > 0 
             ? listedIds.slice(0, 15).map((id: number) => (
                 <MovieCard key={id} movieId={id}/>

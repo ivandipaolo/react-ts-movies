@@ -5,12 +5,16 @@ import { useQuery } from '@apollo/client';
 import { GetMovieByIdQuery, GetMovieByIdQueryVariables, Movie } from '@/graphql/queries';
 import { GetSimilarMoviesDocument, GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables } from '../graphql/queries';
 
-export function RelatedMovies(): JSX.Element {
+type RelatedMoviesProps = {
+  movieId?: number
+}
+
+export function RelatedMovies({movieId}: RelatedMoviesProps): JSX.Element {
   const [listOfIds, setListOfIds] = useState<number[]>([])
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
 
   const { loading, error, data } = useQuery<GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables>(GetSimilarMoviesDocument, {
-    variables: { movieId: selectedMovieId || 0 }
+    variables: { movieId: movieId || selectedMovieId || 0 }
   });
 
   useEffect(() => {
