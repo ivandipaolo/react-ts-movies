@@ -59,6 +59,21 @@ query GetMovieDetails($movieId: Int!) {
   }
 }
 
+query getSimilarMovies($movieId: Int!){
+  similarMovies (id: $movieId) {
+    movies {
+       id
+    }
+  }
+}
+
+query getPopularMovies{
+  popularMovies{
+    movies{
+      id
+    }
+  }
+}
 #Error while trying to get the movies genres into nowPlayingMovies query and popularMovies query
 #[GraphQL error]: Message: Cannot return null for non-nullable field Movie.genres.
 #Location: [object Object], Path: nowPlayingMovies,movies,0,genres

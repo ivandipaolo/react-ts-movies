@@ -7,6 +7,7 @@ import { MovieCard } from "./MovieCard";
 export function Sidebar() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
+  const detailedMovies = useAppSelector((state) => state.detailedMovies.value)
   const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value)
 
   const toggleSubMenu = () => {
@@ -33,7 +34,7 @@ export function Sidebar() {
     <>
       <div className="fixed z-50 top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 no-scrollbar">
         <div className="text-gray-100 text-xl">
-          <div className="p-2.5 mt-1 flex items-center">
+          <div className="p-2.5 mt-1 flex items-center gap-2">
             <img 
             className="w-10"
             src="https://images.squarespace-cdn.com/content/v1/546bda42e4b02689ea84e659/1434908135361-GF5OZKCX107Q6XNSVZAS/vietnamwarfilm?format=1000w" 
@@ -52,8 +53,9 @@ export function Sidebar() {
         {selectedMovieId &&
           <Link to="/movieDetails">
             <div
-              className='p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white'>
-              <span className="text-[15px] ml-4 text-gray-200 font-bold">Movie Details</span>
+              className='p-2.5 mt-3 flex w-full ml-4 justify-start items-start flex-col rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white'>
+              <span className="text-[15px] text-gray-200 font-bold">Movie Details</span>
+              <span className='text-xs truncate'>{detailedMovies.find((movie) => movie.id === selectedMovieId)?.name}</span>
             </div>
           </Link>
         }
@@ -61,8 +63,8 @@ export function Sidebar() {
         <div
           className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
           onClick={toggleSubMenu}>
-          <div className="flex justify-between w-full items-center">
-            <span className="text-[15px] ml-4 text-gray-200 font-bold">Favorite Movies</span>
+          <div className="flex justify-between text-center w-full items-center">
+            <span className="text-[15px] ml-4 text-gray-200 font-bold">{`Favorite Movies ${favoriteMovies.length > 0 ? `(${favoriteMovies.length})` : ''} `} </span>
             <span className='text-sm'>
               <svg
                 className="block h-6 w-6"

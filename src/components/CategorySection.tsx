@@ -35,7 +35,7 @@ export const CategorySection = () => {
   return (
     <div>
       <Select
-        className="max-w-2xl mx-auto p-auto"
+        className="lg:max-w-2xl w-3/4 lg:ml-10 sm:ml-1 ml-2 p-auto"
         options={uniqueGenres.map((genre) => ({ label: genre, value: genre})).sort((a, b) => a.label.localeCompare(b.label))}
         value={selectedCategory}
         onChange={(selectedOption: CategoryOption | null) => {selectedOption ? setSelectedCategory(selectedOption) : setSelectedCategory(selectedCategoryInitialState)}}

@@ -55,17 +55,17 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
 
   return (
     <div className="flex flex-col m-auto p-auto">
-      <h1 className="flex py-5 lg:px-3 md:px-10 px-5 lg:mx-8 md:mx-10 mx-5 font-bold text-4xl dark:text-white text-gray-700">
+      <h1 className="flex py-5 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-4xl dark:text-white text-gray-700">
         {title}
       </h1>
       <slot/>
       <div className="flex overflow-x-scroll pb-10 no-scrollbar" ref={generalWrapperRef} onScroll={() => handleScroll()}>
         { window.innerWidth < layoutWidth && layoutLeftScroll > 0
-          ? <div className="fixed z-10 flex w-[4em] left-0 h-[18rem] bg-transparent bg-gradient-to-r from-blue-800"><span className="m-auto cursor-default text-white">{'<'}</span></div>   
+          ? <div className="fixed z-10 w-[4em] left-0 h-[18rem] bg-transparent bg-gradient-to-r from-blue-800 hidden lg:flex"><span className="m-auto cursor-default text-white">{'<'}</span></div>   
           : <></>
           //Todo arreglar fixed
         }
-        <div className="flex flex-nowrap lg:ml-10 md:ml-20 ml-10">
+        <div className="flex flex-nowrap lg:ml-10 md:ml-20 sm:ml-2">
           <div className="flex flex-row gap-2 overflow-x-auto ml-2 mr-2" ref={moviesWrapperRef}>
             { listedIds.length > 0 
             ? listedIds.slice(0, 15).map((id: number) => (
@@ -76,7 +76,7 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
           </div>
         </div>
         { window.innerWidth < layoutWidth && layoutRightScroll !== layoutLeftScroll
-          ? <div className="fixed z-10 flex w-[4em] right-0 h-[18rem] bg-transparent bg-gradient-to-l from-blue-800"><span className="m-auto cursor-default text-white">{'>'}</span></div>   
+          ? <div className="fixed z-0 w-[4em] right-0 h-[18rem] bg-transparent bg-gradient-to-l from-blue-800 hidden lg:flex"><span className="m-auto cursor-default text-white">{'>'}</span></div>   
           : <></>
           //Todo arreglar fixed
         }
