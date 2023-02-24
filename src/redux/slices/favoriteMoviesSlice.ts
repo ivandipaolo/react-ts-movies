@@ -4,8 +4,7 @@ import type { RootState } from '@/redux/store'
 
 interface FavoriteMoviesSlice {
   value: {
-    id: number,
-    name: string
+    id: number
   }[]
 }
 
@@ -25,15 +24,15 @@ export const favoriteMovies = createSlice({
   name: 'favoriteMovies',
   initialState: loadFromSessionStorage(),
   reducers: {
-    toggleFavoriteMovie: (state: FavoriteMoviesSlice, action: PayloadAction<{id: number, name: string}>) => {
-      const { id, name } = action.payload;
+    toggleFavoriteMovie: (state: FavoriteMoviesSlice, action: PayloadAction<{id: number}>) => {
+      const { id } = action.payload;
       const alreadyExists = state.value.some(item => item.id === id);
       if (alreadyExists) {
         state.value = state.value.filter(item => item.id !== id);
         sessionStorage.setItem("favoriteMovies", JSON.stringify(state.value));
         return;
       }
-      state.value.push({ id, name });
+      state.value.push({ id });
       sessionStorage.setItem("favoriteMovies", JSON.stringify(state.value));
     }
   },

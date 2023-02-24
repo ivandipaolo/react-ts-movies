@@ -55,11 +55,14 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
 
   return (
     <div className="flex flex-col m-auto p-auto mb-2">
-      <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-2xl lg:text-4xl dark:text-white text-gray-700">
-        {title}
-      </h1>
-      <slot/>
-      <div className="flex overflow-x-scroll pb-10 no-scrollbar" ref={generalWrapperRef} onScroll={() => handleScroll()}>
+      {
+        title
+        ? <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-2xl lg:text-4xl dark:text-white text-gray-700">
+            {title}
+          </h1>
+        : <></>
+      }
+      <div className="flex overflow-x-scroll py-2 no-scrollbar" ref={generalWrapperRef} onScroll={() => handleScroll()}>
         { window.innerWidth < layoutWidth && layoutLeftScroll > 0
           ? <div className="fixed z-10 w-[4em] left-0 h-[18rem] bg-transparent bg-gradient-to-r from-blue-800 hidden lg:flex"><span className="m-auto cursor-default text-white">{'<'}</span></div>   
           : <></>
