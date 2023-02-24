@@ -1,52 +1,35 @@
 query getMovieById($movieId: Int!){
   movieDetail(id: $movieId) {
-    movie {
       id
-      original_title
+      title
       overview
       poster_path
+      vote_average
       genres {
         id
         name
       }
-    }
   }
 }
 
 query getAvailableMovies{
   nowPlayingMovies {
-    movies{
-      id
-      release_date
-    }
+    id
+    release_date
   }
   popularMovies {
-    movies{
-      id
-      release_date
-    }
+    id
+    release_date
   }
 }
 
 query GetMovieDetails($movieId: Int!) {
   movieDetail(id: $movieId) {
-    movie{
-      adult
       backdrop_path
-      budget
-      homepage
-      imdb_id
-      original_language
-      original_title
+      title
       overview
       poster_path
       release_date
-      revenue
-      runtime
-      status
-      tagline
-      vote_average
-      vote_count
       genres {
         id
         name
@@ -55,23 +38,18 @@ query GetMovieDetails($movieId: Int!) {
         id
         name
       }
-    }
   }
 }
 
 query getSimilarMovies($movieId: Int!){
   similarMovies (id: $movieId) {
-    movies {
-       id
-    }
+      id
   }
 }
 
 query getPopularMovies{
   popularMovies{
-    movies{
-      id
-    }
+    id
   }
 }
 #Error while trying to get the movies genres into nowPlayingMovies query and popularMovies query

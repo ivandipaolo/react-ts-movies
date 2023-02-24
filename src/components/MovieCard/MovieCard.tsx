@@ -20,13 +20,13 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
   });
 
   const movieDetail = data?.movieDetail;
-  const movie: Partial<Movie> | undefined | null = movieDetail?.movie;
+  const movie: Partial<Movie> | undefined | null = movieDetail;
   const dispatch = useAppDispatch()
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (movie?.id && movie?.genres && movie?.original_title) {
-      const payload = { id: movie.id, genres: movie.genres?.map((genre) => genre.name), name: movie.original_title };
+    if (movie?.id && movie?.genres && movie?.title) {
+      const payload = { id: movie.id, genres: movie.genres?.map((genre) => genre ? genre.name : ''), name: movie.title };
       dispatch(addDetailedMovie(payload));
     }
   }, [data, dispatch, movie]);
@@ -58,13 +58,13 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
           <div className="absolute w-full h-full shadow-2xl opacity-20 transform duration-500 inset-y-full group-hover:-inset-y-0"></div>
           <div className="absolute bg-gradient-to-t  from-blue-800 w-full via-black h-full transform duration-500 inset-y-3/4 group-hover:-inset-y-0">
             <div className="absolute w-full h-[4rem] flex flex-col gap-1 place-content-center">
-              <p className="capitalize font-bold text-xs text-center shadow-2xl text-white mb-2">{movie?.original_title}</p>
+              <p className="capitalize font-bold text-xs text-center shadow-2xl text-white mb-2">{movie?.title}</p>
               {
                 movie?.genres && movie?.genres.length > 0
                 ? <ul className='flex absolute bottom-0 w-full flex-row gap-2 justify-center align-middle'>
                     {
                       movie.genres.slice(0, 3).map((genre) => (
-                        <li className='flex h-auto w-auto bg-gray-900 bg-opacity-60 rounded-sm justify-center align-middle' key={genre.id}><span className='m-auto p-1 font-semibold text-white text-[.5rem]'>{genre.name === 'Science Fiction' ? 'S. Fiction' : genre.name}</span></li>
+                        <li className='flex h-auto w-auto bg-gray-900 bg-opacity-60 rounded-sm justify-center align-middle' key={genre && genre.id}><span className='m-auto p-1 font-semibold text-white text-[.5rem]'>{genre && genre.name === 'Science Fiction' ? 'S. Fiction' : genre?.name}</span></li>
                       ))
                     }
                   </ul>
@@ -86,7 +86,7 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
         </div>
         : <div className='flex flex-col items-center align-middle justify-center cursor-pointer' onClick={handleSelectedMovie}>
             <div className='flex flex-row justify-betweens items-center align-middle gap-2 text-center'>
-              <p className="capitalize font-bold text-md text-center lg:pt-1 shadow-2xl text-white m-1 mb-2">{movie?.original_title}</p>
+              <p className="capitalize font-bold text-md text-center lg:pt-1 shadow-2xl text-white m-1 mb-2">{movie?.title}</p>
               <FavoriteStar movieId={movieId} />
             </div>
             <div className="relative w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none">
