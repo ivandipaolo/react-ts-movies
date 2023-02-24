@@ -2,8 +2,7 @@ import { HorizontalLayout } from './HorizontalLayout';
 import { useState, useEffect } from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { useQuery } from '@apollo/client';
-import { GetMovieByIdQuery, GetMovieByIdQueryVariables, Movie } from '@/graphql/queries';
-import { GetSimilarMoviesDocument, GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables } from '../graphql/queries';
+import { GetSimilarMoviesDocument, GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables } from '@/graphql/queries';
 
 type RelatedMoviesProps = {
   movieId?: number
@@ -18,8 +17,8 @@ export function RelatedMovies({movieId}: RelatedMoviesProps): JSX.Element {
   });
 
   useEffect(() => {
-    if(data && data.similarMovies && data.similarMovies.movies) {
-      setListOfIds(data.similarMovies.movies.map(a => a.id))
+    if(data && data.similarMovies && data.similarMovies) {
+      setListOfIds(data.similarMovies.map((movie) => movie ? movie.id  : 0))
     }
   }, [data])
 

@@ -1,6 +1,6 @@
 overwrite: true
 watch: true
-schema: http://localhost:3131/graphql
+schema: https://movieql.netlify.app/graphql
 generates:
   ./src/graphql/queries.ts:
     documents: src/**/*.gql
