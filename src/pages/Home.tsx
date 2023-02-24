@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
 import { addMovies } from '@/redux/slices/availableMoviesSlice';
@@ -12,16 +12,16 @@ import { GetAvailableMoviesDocument, Movie } from '@/graphql/queries';
 
 export const Home = () => {
   const searchBoxValue = useAppSelector((state) => state.searchValue.value)
-  const availableMoviesFromReducer = useAppSelector((state) => state.availableMovies.value)
-  const [availableMoviesIds, setAvailableMoviesIds] = useState([])
   const { loading, error, data } = useQuery(GetAvailableMoviesDocument);
   const dispatch = useAppDispatch()
+  let availableMoviesIds;
+
   useEffect(() => {
-    if (data && availableMoviesFromReducer !== availableMoviesIds) {
-      setAvailableMoviesIds(data.nowPlayingMovies.concat(data.popularMovies).map((movie: Movie) => movie.id));
+    if (data) {
+      availableMoviesIds = (data.nowPlayingMovies.concat(data.popularMovies)).map((movie: Movie) => movie.id);
       dispatch(addMovies(availableMoviesIds));
     }
-  }, [dispatch, data, availableMoviesFromReducer, availableMoviesIds]);
+  }, [dispatch, data]);
   return (
   <div>
     {
