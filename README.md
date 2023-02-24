@@ -4,7 +4,20 @@
   A movie app built with React, TypeScript, and TailwindCSS. It utilizes Apollo Client for data fetching, Redux for state management, and other important dependencies such as React Router, GraphQL Codegen, etc. 
 </p>
 
-## Table of Contents
+## Some gifs of how it works:
+
+![animations](https://user-images.githubusercontent.com/65032224/221240777-16f641a5-060d-4642-a2f0-305f405a90c5.gif)
+
+![genrefilter](https://user-images.githubusercontent.com/65032224/221240802-2473a010-29c2-40ad-8a1c-e59be019c73a.gif)
+
+![searchg](https://user-images.githubusercontent.com/65032224/221240812-be0bedf2-9b0f-40e5-9b85-fe09e0266466.gif)
+
+![mobileD](https://user-images.githubusercontent.com/65032224/221240791-f8b6dfba-7766-499f-8595-d36769bf8fde.gif)
+
+##
+
+## Table of Contents!
+
 
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
