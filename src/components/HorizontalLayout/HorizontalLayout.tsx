@@ -11,6 +11,8 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
   const [layoutLeftScroll, setLayoutLeftScroll] = useState(0);
   const [layoutRightScroll, setLayoutRightScroll] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [hoveredSide, setHoveredSide] = useState<"left" | "right" | null>(null);
+  const [layoutHoverStop, setLayoutHoverStop] = useState<boolean>(false);
 
   const moviesWrapperRef = useRef<HTMLDivElement>(document.createElement('div'));
   const generalWrapperRef = useRef<HTMLDivElement | null>(null);
@@ -27,7 +29,47 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
       setLayoutLeftScroll(Math.round(generalWrapperRef.current.scrollLeft))
       setLayoutRightScroll(generalWrapperRef.current.scrollWidth - generalWrapperRef.current.clientWidth)
     }
+  } 
+  useEffect(() => {
+    setTimeout(() => {
+      if (generalWrapperRef.current) {
+        setLayoutLeftScroll(Math.round(generalWrapperRef.current.scrollLeft))
+        setLayoutRightScroll(generalWrapperRef.current.scrollWidth - generalWrapperRef.current.clientWidth)
+      } 
+    }, 500);
+  }, [])   
+
+  const handleLayoutHover = (side: "left" | "right") => {
+    setLayoutHoverStop(false)
+    setHoveredSide(side);
+  };
+
+  const handleLayoutStop = () => {
+    setLayoutHoverStop(true)
   }
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+    if (hoveredSide && !layoutHoverStop) {
+      const handleInterval = () => {
+        if (generalWrapperRef.current) {
+          if (hoveredSide === "left" && generalWrapperRef.current.scrollLeft > 0) {
+            generalWrapperRef.current.scrollLeft -= 2;
+            setLayoutLeftScroll(Math.round(generalWrapperRef.current.scrollLeft));
+          } else if (hoveredSide === "right" && generalWrapperRef.current.scrollLeft < generalWrapperRef.current.scrollWidth) {
+            generalWrapperRef.current.scrollLeft += 3;
+            setLayoutLeftScroll(Math.round(generalWrapperRef.current.scrollLeft));
+          } else {
+            setHoveredSide(null);
+          }
+        }
+      };
+      intervalId = setInterval(handleInterval, 10);
+    }
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [hoveredSide, generalWrapperRef.current?.scrollLeft, layoutHoverStop]);
 
   function HorizontalLayoutLoader() {
     return (
@@ -64,9 +106,8 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
       }
       <div className="flex overflow-x-scroll py-2 no-scrollbar" ref={generalWrapperRef} onScroll={() => handleScroll()}>
         { window.innerWidth < layoutWidth && layoutLeftScroll > 0
-          ? <div className="fixed z-10 w-[4em] left-0 h-[18rem] bg-transparent bg-gradient-to-r from-blue-800 hidden lg:flex"><span className="m-auto cursor-default text-white">{'<'}</span></div>   
+          ? <div className="fixed z-10 w-[20em] h-[18rem] bg-transparent hidden lg:flex" onMouseEnter={() => handleLayoutHover('left')} onMouseLeave={handleLayoutStop}></div>   
           : <></>
-          //Todo arreglar fixed
         }
         <div className="flex flex-nowrap lg:ml-10 md:ml-20 sm:ml-2">
           <div className="flex flex-row gap-2 overflow-x-auto mx-2" ref={moviesWrapperRef}>
@@ -78,11 +119,10 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
             }
           </div>
         </div>
-        { window.innerWidth < layoutWidth && layoutRightScroll !== layoutLeftScroll
-          ? <div className="fixed z-0 w-[4em] right-0 h-[18rem] bg-transparent bg-gradient-to-l from-blue-800 hidden lg:flex"><span className="m-auto cursor-default text-white">{'>'}</span></div>   
-          : <></>
-          //Todo arreglar fixed
-        }
+        <div
+          className={`fixed z-0 w-[20rem] h-[18rem] right-0 bg-transparent hidden lg:${layoutRightScroll !== layoutLeftScroll ? 'flex' : 'hidden'}`}
+          onMouseEnter={() => handleLayoutHover('right')}
+          onMouseLeave={handleLayoutStop}></div>   
       </div>
     </div>
   );
