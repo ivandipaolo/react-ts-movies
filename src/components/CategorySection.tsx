@@ -16,8 +16,11 @@ export const CategorySection = () => {
   const availableGenres = useAppSelector((state) => state.detailedMovies.value)
   const allAvailableMovies = useAppSelector((state) => state.availableMovies.value)
   const selectedCategoryInitialState = {label: 'Select a Genre', value: 'All'};
+
+  const [isVisible, setIsVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(selectedCategoryInitialState);
   const [moviesWithGenreIds, setMoviesWithGenreIds] = useState<number[]>(allAvailableMovies);
+  
   // const genres = useAppSelector((state) => state.genres.value)
   const uniqueGenres = Array.from(new Set(availableGenres.map((movie) => movie.genres).flat()))
 
@@ -32,8 +35,12 @@ export const CategorySection = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allAvailableMovies, selectedCategory])
   
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   return (
-    <div>
+    <div className={`duration-300 ease-in-out transform transition-all" ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
       <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-2xl lg:text-4xl dark:text-white text-gray-700">
         Filter by genre:
       </h1>

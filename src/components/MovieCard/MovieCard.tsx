@@ -43,10 +43,7 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
   }
   
   return (
-    <>
-      {
-        //Todo: movie undefined template
-      }
+    <div className='duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-55'>
       {loading ? (
         <div className="relative group w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none animate-pulse">
           <div className="absolute inset-0 bg-gray-400 rounded-md flex items-center justify-center">
@@ -97,7 +94,7 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
             </div>  
         </div>
       )}
-    </>
+    </div>
   );
 };
 
