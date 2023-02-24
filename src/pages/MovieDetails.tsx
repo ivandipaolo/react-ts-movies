@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import { useAppSelector } from '@/redux/hooks';
-import { GetMovieDetailsDocument, GetMovieDetailsQuery, GetMovieDetailsQueryVariables, Movie} from '@/graphql/queries';
+import { GetMovieDetailsDocument, GetMovieDetailsQuery, GetMovieDetailsQueryVariables, Movie, Genre } from '@/graphql/queries';
 import { RelatedMovies } from '@/components/RelatedMovies';
 import { FavoriteStar } from '@/components/FavoriteStar';
 
@@ -40,10 +40,10 @@ export const MovieDetails = () => {
           <div className="w-full md:w-3/6 mt-2 md:mt-4 space-y-4">
             <div className='flex flex-row gap-3 text-center justify-center bg-gray-800 rounded-md lg:p-2'>
               <h1 className="text-3xl lg:text-5xl font-semibold capitalize text-center text-white">{movie?.original_title}</h1>
-              <FavoriteStar width={30} movieId={selectedMovieId}/>
+              <FavoriteStar width={30} movieId={selectedMovieId || undefined}/>
             </div>
             <div className="flex items-start justify-center gap-3">
-              {movie?.genres?.map((genre, i) => (
+              {movie?.genres?.map((genre: Genre, i: number) => (
                 <span key={i} className="mx-2truncate dark:text-white text-gray-800 text-center">
                   {genre.name}
                 </span>

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 
 interface Props {
-  movieId: number;
+  movieId?: number;
   width?: number;
 }
 
