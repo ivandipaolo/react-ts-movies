@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client'
@@ -11,7 +11,7 @@ import { FavoriteStar } from '../FavoriteStar';
 
 type MovieCardProps = {
   movieId: number;
-  detailed: boolean;
+  detailed?: boolean;
 };
 
 const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
@@ -67,7 +67,7 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
                 ? <ul className='flex absolute bottom-0 w-full flex-row gap-2 justify-center align-middle'>
                     {
                       movie.genres.slice(0, 3).map((genre) => (
-                        <li className='flex h-auto w-auto bg-gray-500 bg-opacity-60 rounded-sm justify-center align-middle' key={genre.id}><span className='m-auto p-1 font-semibold text-white text-[.5rem]'>{genre.name === 'Science Fiction' ? 'S. Fiction' : genre.name}</span></li>
+                        <li className='flex h-auto w-auto bg-gray-900 bg-opacity-60 rounded-sm justify-center align-middle' key={genre.id}><span className='m-auto p-1 font-semibold text-white text-[.5rem]'>{genre.name === 'Science Fiction' ? 'S. Fiction' : genre.name}</span></li>
                       ))
                     }
                   </ul>

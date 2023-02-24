@@ -6,6 +6,7 @@ import { useAppSelector } from '@/redux/hooks';
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
+  const detailedMovies = useAppSelector((state) => state.detailedMovies.value)
 
   useEffect(() => {
     setIsMenuOpen(false)
@@ -30,7 +31,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="absolute bottom-0 w-full bg-gray-900 z-100">
+    <nav className="fixed bottom-0 w-full bg-gray-900 z-100">
       <Transition
         show={isMenuOpen}
         className="z-50 w-full bg-gray-900"
@@ -41,7 +42,7 @@ export const Navbar = () => {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95">
           <div className="bottom-2 z-50">
-            <div className="px-2 pt-2 flex flex-col pb-3 space-y-1 sm:px-3">
+            <div className="z-50 px-2 pt-2 flex flex-col pb-3 space-y-1 sm:px-3">
               <Link
                 to="/"
                 className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
@@ -51,12 +52,19 @@ export const Navbar = () => {
               </Link>
               {selectedMovieId &&
               <Link
-                to="/movieDetails"
-                className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
-                  <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                    Movie Details
-                  </button>
-              </Link>
+              to="/movieDetails"
+              className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
+              <button
+                className="w-full flex flex-row justify-between items-center"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <span className="text-xs text-center">
+                  {detailedMovies.find((movie) => movie.id === selectedMovieId)?.name}
+                </span>
+                <span>
+                  Movie Details
+                </span>
+              </button>
+            </Link>
               }
             </div>
           </div>
@@ -68,8 +76,8 @@ export const Navbar = () => {
               <Link to="/">
                 <img
                 className="h-9 w-9 p-auto"
-                src="https://icons.iconarchive.com/icons/zhoolego/material/512/Movies-icon.png"
-                alt="Workflow"/>
+            src="https://images.squarespace-cdn.com/content/v1/546bda42e4b02689ea84e659/1434908135361-GF5OZKCX107Q6XNSVZAS/vietnamwarfilm?format=1000w" 
+            alt="Workflow"/>
               </Link>
             </div>
           </div>
