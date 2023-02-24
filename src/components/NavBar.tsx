@@ -55,9 +55,9 @@ export const Navbar = () => {
               to="/movieDetails"
               className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
               <button
-                className="w-full flex flex-row justify-between items-center"
+                className="w-full flex flex-row justify-between items-center align-middle"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                <span className="text-xs text-center">
+                <span className="text-xs text-center py-1">
                   {detailedMovies.find((movie) => movie.id === selectedMovieId)?.name}
                 </span>
                 <span>
