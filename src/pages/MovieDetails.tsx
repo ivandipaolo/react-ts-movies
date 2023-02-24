@@ -33,13 +33,13 @@ export const MovieDetails = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row bg-gray-200 dark:bg-gray-800 lg:w-[90%] m-0 md:m-5 p-6 lg:p-5">
+    <div className={`flex flex-col md:flex-row bg-gray-200 dark:bg-gray-800 lg:w-[90%] m-0 md:m-5 p-6 lg:p-5 ${movie ? 'grow' : ''}`}>
       <div className="flex-1 lg:w-1/2 lg:flex lg:flex-row lg:items-center">
         <div className="flex flex-col lg:flex-row w-full gap-2 dark:text-white text-gray-800 lg:ml-20">
           <img className="w-6/6 lg:w-5/12 object-cover rounded-md transform" src={`https://www.themoviedb.org/t/p/w440_and_h660_face${movie?.poster_path}` || ''} alt="Movie poster" />
           <div className="w-full md:w-3/6 mt-2 md:mt-4 space-y-4">
             <div className='flex flex-row gap-3 text-center justify-center bg-gray-800 rounded-md lg:p-2'>
-              <h1 className="text-3xl lg:text-6xl font-semibold capitalize text-center text-white">{movie?.original_title}</h1>
+              <h1 className="text-3xl lg:text-5xl font-semibold capitalize text-center text-white">{movie?.original_title}</h1>
               <FavoriteStar width={30} movieId={selectedMovieId}/>
             </div>
             <div className="flex items-start justify-center gap-3">
