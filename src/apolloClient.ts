@@ -16,7 +16,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:3131/graphql",
+  uri: "https://movieql.netlify.app/graphql",
 })
 
 const createApolloClient = () => {
