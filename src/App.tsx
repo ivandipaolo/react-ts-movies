@@ -13,8 +13,8 @@ function App(): JSX.Element {
 
   return (
     <BrowserRouter>
-      <section className={`h-full light:bg-white dark:bg-gray-900`}>
-        <div className="lg:ml-[20rem] ml-0 lg:block">
+      <section className={`h-screen light:bg-white dark:bg-gray-900`}>
+        <div className="h-screen lg:ml-[20rem] ml-0 lg:block">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/movieDetails" element={<MovieDetails />} />

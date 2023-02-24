@@ -1,11 +1,12 @@
 import { useAppSelector } from "@/redux/hooks";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { SearchBox } from '@/components/SearchBox';
 import { MovieCard } from "./MovieCard";
 
 export function Sidebar() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
   const detailedMovies = useAppSelector((state) => state.detailedMovies.value)
   const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value)
@@ -30,6 +31,14 @@ export function Sidebar() {
         d="M4 6h16M4 12h16M4 18h16"/>
     ),
   };
+
+  const handleDarkModeToggle = () => {
+    document.documentElement.classList.toggle('dark')
+    setIsDarkMode(!!document.documentElement.classList[0])
+    console.log(document.documentElement.className)
+  }
+
+
   return (
     <>
       <div className="fixed z-50 top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 no-scrollbar">
@@ -39,7 +48,14 @@ export function Sidebar() {
             className="w-10"
             src="https://images.squarespace-cdn.com/content/v1/546bda42e4b02689ea84e659/1434908135361-GF5OZKCX107Q6XNSVZAS/vietnamwarfilm?format=1000w" 
             alt="logo" />
-            <h1 className="font-bold text-gray-200 text-[15px] ml-3">Movies Center</h1>
+            <h1 className="font-bold text-gray-200 text-[15px] mx-5">Movies Center</h1>
+            <button className="toggle-dark" onClick={handleDarkModeToggle}>
+              {
+                isDarkMode
+                ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+              }
+            </button>
           </div>
           <div className="my-2 bg-gray-600 h-[1px]"></div>
         </div>
