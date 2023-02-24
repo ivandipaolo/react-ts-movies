@@ -33,26 +33,24 @@ export const SearchSection: React.FC = () => {
 
   return (
     <div>
-      <div className="max-w-2xl mx-auto">
-      { noResults &&
-        <>
+      { noResults 
+      && <>
           <div className='m-2 text-center'>
             <h2>
               There are no results for: <span>{searchBoxValue}</span>
             </h2>
           </div>
           { favoriteMovies[0] 
-            ? <>
-              <h2 className='m-2 text-center'>
-                Here are some related movies based on your favorite ones.
-              </h2>
-              <RelatedMovies movieId={favoriteMovies[0].id}/>
-            </> 
-            : <HorizontalLayout title={!noResults ? `Results for: ${searchBoxValue}` : 'Some recommendations:'} listedIds={moviesToDisplay} />
+            && <>
+                <h2 className='m-2 text-center'>
+                  Here are some related movies based on your favorite ones.
+                </h2>
+                <RelatedMovies movieId={favoriteMovies[0].id}/>
+              </> 
           }
         </>
         }
-      </div>
+        <HorizontalLayout title={!noResults ? `Results for: ${searchBoxValue}` : 'Some recommendations:'} listedIds={moviesToDisplay} />
     </div>
   );
 };
