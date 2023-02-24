@@ -4,8 +4,6 @@
   A movie app built with React, TypeScript, and TailwindCSS. It utilizes Apollo Client for data fetching, Redux for state management, and other important dependencies such as React Router, GraphQL Codegen, etc. 
 </p>
 
-<h2 align="center"><a href="https://react-ts-movies-center.vercel.app/"> Live Version Here </a></h2>
-
 ## Table of Contents
 
 - [Technologies Used](#technologies-used)
