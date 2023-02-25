@@ -54,10 +54,7 @@
 
 ![mobileD](https://user-images.githubusercontent.com/65032224/221240791-f8b6dfba-7766-499f-8595-d36769bf8fde.gif)
 
-
 </details>
-
-##
 
 ## Table of Contents!
 
@@ -66,6 +63,7 @@
 - [Installation](#installation)
 - [Folder Structure](#folder-structure)
 - [Usage](#usage)
+- [Back-end Issues](#backend-issues)
 
 ## Technologies Used
 
@@ -81,7 +79,13 @@
 
 ### Frontend:
 
-To install the project, clone the repository and run the following command:
+To install the project, clone the repository from this branch:
+```
+git clone -b adapted_to_backend_repo https://github.com/ivandipaolo/react-ts-movies.git
+```
+[adapted_to_backend_repo](https://github.com/ivandipaolo/react-ts-movies/tree/adapted_to_backend_repo)
+
+and run the following command:
 
 ```
 npm install
@@ -107,7 +111,7 @@ To start the development server, run the following command:
 ```
 npm run dev
 ```
-To compile the GraphQL types, run the following command:
+To compile the GraphQL types, run the following command: (Only if you are changing any query)
 ```
 npx graphql-codegen
 ```
@@ -133,9 +137,9 @@ And access the graphQL server by visiting http://localhost:3131/graphql in your 
 - `src/App.tsx`: The entry point of the application.
 - `src/main.tsx`: The main file that renders the application.
 
-<details>
+<details id="backend-issues">
   <summary>
-     <h2>Backend problems</h2>
+     <h2>Backend issues</h2>
   </summary>
 
 ### The graphQL Playground do not correspond to the Back-End repo on this link
@@ -145,7 +149,7 @@ And access the graphQL server by visiting http://localhost:3131/graphql in your 
 ### https://movieql.netlify.app/graphql
 ![image](https://user-images.githubusercontent.com/65032224/221209678-2d0bc8ab-95ec-4768-ae8b-88f99563857a.png)
 
-### http://localhost:3131/graphql 
+### http://localhost:3131/graphql corresponding to https://github.com/hwhang0917/ql-movie-api
 ![image](https://user-images.githubusercontent.com/65032224/221210045-a80aa781-5008-4c8e-9195-17308a41f363.png)
 
 
