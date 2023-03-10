@@ -1,10 +1,12 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { useAppDispatch } from '@/redux/hooks';
-import { setSearchValue } from '@/redux/slices/searchValueSlice';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { setSearchMovies } from '@/redux/slices/searchedMoviesSlice';
 
 export const SearchBox: React.FC = () => {
   const [query, setQuery] = useState('');
+  const [filteredMovies, setFilteredMovies] = useState<number[]>([])
   const dispatch = useAppDispatch();
+  const availableMovies = useAppSelector(state => state.detailedMovies.value);
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -12,9 +14,21 @@ export const SearchBox: React.FC = () => {
 
   const handleQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    dispatch(setSearchValue(value || ''));
     setQuery(value);
+    setFilteredMovies(
+      availableMovies.filter(movie =>
+        movie.name.toLowerCase().includes(query.toLowerCase())
+      ).map(movie => movie.id)
+    );
+    
   };
+
+
+  useEffect(() => {
+    dispatch(setSearchMovies(filteredMovies))
+  }, [availableMovies, dispatch, filteredMovies, query]);
+
+  
 
   return (
     <form onSubmit={handleSearch}>

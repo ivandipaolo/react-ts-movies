@@ -11,11 +11,10 @@ import { SearchSection } from '@/components/SearchSection';
 import { GetAvailableMoviesDocument, Movie } from '@/graphql/queries';
 
 export const Home = () => {
-  const searchBoxValue = useAppSelector((state) => state.searchValue.value)
+  const searchedMovies = useAppSelector((state) => state.searchedMovies.value)
   const { loading, error, data } = useQuery(GetAvailableMoviesDocument);
   const dispatch = useAppDispatch()
   let availableMoviesIds;
-
   useEffect(() => {
     if (data) {
       availableMoviesIds = (data.nowPlayingMovies.concat(data.popularMovies)).map((movie: Movie) => movie.id);
@@ -25,7 +24,7 @@ export const Home = () => {
   return (
   <div>
     {
-      searchBoxValue.trim() !== ''
+      searchedMovies.length > 0
       ?
         <SearchSection />
       :

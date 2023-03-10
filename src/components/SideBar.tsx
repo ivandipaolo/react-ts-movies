@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/redux/hooks";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { SearchBox } from '@/components/SearchBox';
 import { MovieCard } from "./MovieCard";
