@@ -3,10 +3,12 @@ import { Transition } from "@headlessui/react";
 import { SearchBox } from './SearchBox';
 import { Link } from "react-router-dom";
 import { useAppSelector } from '@/redux/hooks';
+import { HorizontalLayout } from './HorizontalLayout';
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
   const detailedMovies = useAppSelector((state) => state.detailedMovies.value)
+  const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value)
 
   useEffect(() => {
     setIsMenuOpen(false)
@@ -43,6 +45,32 @@ export const Navbar = () => {
         leaveTo="opacity-0 scale-95">
           <div className="bottom-2 z-50">
             <div className="z-50 px-2 pt-2 flex flex-col pb-3 space-y-1 sm:px-3">
+              {favoriteMovies.length > 0 &&
+                <>
+                  <h1 className='text-white text-m text-start font-medium'>
+                    Your favorite movie{favoriteMovies.length > 1 && 's'}:
+                  </h1>
+                  <div className='overflow-auto'>
+                    <HorizontalLayout listedIds={favoriteMovies.map(movie => movie.id)} />
+                  </div>
+                </>
+              }
+              {selectedMovieId &&
+              <Link
+                to="/movieDetails"
+                className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
+                <button
+                  className="w-full flex flex-row justify-between items-center align-middle"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                  <span className="text-xs text-center py-1">
+                    {detailedMovies.find((movie) => movie.id === selectedMovieId)?.name}
+                  </span>
+                  <span>
+                    Movie Details
+                  </span>
+                </button>
+              </Link>
+              }
               <Link
                 to="/"
                 className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
@@ -50,22 +78,6 @@ export const Navbar = () => {
                   Home
                 </button>
               </Link>
-              {selectedMovieId &&
-              <Link
-              to="/movieDetails"
-              className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
-              <button
-                className="w-full flex flex-row justify-between items-center align-middle"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                <span className="text-xs text-center py-1">
-                  {detailedMovies.find((movie) => movie.id === selectedMovieId)?.name}
-                </span>
-                <span>
-                  Movie Details
-                </span>
-              </button>
-            </Link>
-              }
             </div>
           </div>
       </Transition>
