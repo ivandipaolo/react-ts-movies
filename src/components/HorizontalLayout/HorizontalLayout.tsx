@@ -99,7 +99,7 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
     <div className="flex flex-col m-auto p-auto mb-2">
       {
         title
-        ? <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-1xl lg:text-3xl dark:text-white text-gray-700">
+        ? <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-2xl lg:text-4xl dark:text-white text-gray-700">
             {title}
           </h1>
         : <></>

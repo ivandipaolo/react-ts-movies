@@ -6,9 +6,10 @@ import { GetSimilarMoviesDocument, GetSimilarMoviesQuery, GetSimilarMoviesQueryV
 
 type RelatedMoviesProps = {
   movieId?: number
+  title?: string
 }
 
-export function RelatedMovies({movieId}: RelatedMoviesProps): JSX.Element {
+export function RelatedMovies({movieId, title = ""}: RelatedMoviesProps): JSX.Element {
   const [listOfIds, setListOfIds] = useState<number[]>([])
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
 
@@ -33,7 +34,7 @@ export function RelatedMovies({movieId}: RelatedMoviesProps): JSX.Element {
 
   return (
     <div className="">
-      <HorizontalLayout title='Related Movies' listedIds={listOfIds} />
+      <HorizontalLayout title={title ? title : 'Related Movies'} listedIds={listOfIds} />
     </div>
   );
 }

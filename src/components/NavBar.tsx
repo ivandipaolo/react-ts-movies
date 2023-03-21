@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Transition } from "@headlessui/react";
-import { SearchBox } from './SearchBox';
+import SearchBox from './SearchBox';
 import { Link } from "react-router-dom";
 import { useAppSelector } from '@/redux/hooks';
 import { HorizontalLayout } from './HorizontalLayout';
