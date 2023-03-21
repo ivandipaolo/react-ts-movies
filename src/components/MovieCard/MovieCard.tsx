@@ -53,7 +53,6 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
       ) : (
       detailed 
       ? <div className="relative group w-[12em] h-[18em] overflow-hidden bg-black rounded-md flex-none">
-          {/* Todo: bajar resolucion a imagenes */}
           <img className='object-cover w-full h-full transform duration-700 backdrop-opacity-200' src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie?.poster_path}` || ''} alt='Movie poster.'/>
           <div className="absolute w-full h-full shadow-2xl opacity-20 transform duration-500 inset-y-full group-hover:-inset-y-0"></div>
           <div className="absolute bg-gradient-to-t  from-blue-800 w-full via-black h-full transform duration-500 inset-y-3/4 group-hover:-inset-y-0">

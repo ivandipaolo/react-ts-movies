@@ -3,19 +3,19 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/redux/store'
 
 interface SearchMoviesSlice {
-  value: number[]
+  value: {movies:number[], noResults: boolean}
 }
 
 const initialState: SearchMoviesSlice = {
-  value: [],
+  value: {movies: [], noResults: false},
 }
 
 export const moviesSlice = createSlice({
   name: 'searchMovies',
   initialState,
   reducers: {
-    setSearchMovies: (state: SearchMoviesSlice, action: PayloadAction<number[]>) => {
-      state.value = [...new Set(state.value.concat(action.payload))]
+    setSearchMovies: (state: SearchMoviesSlice, action: PayloadAction<{movies: number[], noResults: boolean}>) => {
+      state.value = {movies: action.payload.movies, noResults: action.payload.noResults};
     }
   },
 })
