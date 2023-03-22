@@ -1,8 +1,14 @@
-import { HorizontalLayout } from './HorizontalLayout';
 import { useState, useEffect } from 'react';
-import { useAppSelector } from '@/redux/hooks';
+
 import { useQuery } from '@apollo/client';
-import { GetSimilarMoviesDocument, GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables } from '@/graphql/queries';
+import { useAppSelector } from '@/redux/hooks';
+import { 
+    GetSimilarMoviesDocument,
+    GetSimilarMoviesQuery,
+    GetSimilarMoviesQueryVariables
+  } from '@/graphql/queries';
+
+import { HorizontalLayout } from '@/components/HorizontalLayout';
 
 type RelatedMoviesProps = {
   movieId?: number

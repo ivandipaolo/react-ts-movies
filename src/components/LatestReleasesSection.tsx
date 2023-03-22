@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { HorizontalLayout } from "@/components/HorizontalLayout";
+
 import { useAppSelector } from "@/redux/hooks";
+
+import { HorizontalLayout } from "@/components/HorizontalLayout";
 
 export function LatestReleasesSection(): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);

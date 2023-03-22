@@ -1,9 +1,15 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { 
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect 
+} from 'react';
+  
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setSearchMovies } from '@/redux/slices/searchedMoviesSlice';
-import { useNavigate } from 'react-router-dom';
 
-const SearchBox = () => {
+export const SearchBox = () => {
   const [query, setQuery] = useState('');
   const [filteredMovies, setFilteredMovies] = useState<number[]>([]);
   const dispatch = useAppDispatch();
@@ -77,5 +83,3 @@ const SearchBox = () => {
     </form>
   );
 };
-
-export default SearchBox;

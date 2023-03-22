@@ -1,8 +1,9 @@
-import { useAppSelector } from "@/redux/hooks";
-import { useState } from 'react';
 import { Link } from "react-router-dom";
-import SearchBox from '@/components/SearchBox';
-import { MovieCard } from "./MovieCard";
+import { useState } from 'react';
+import { useAppSelector } from "@/redux/hooks";
+
+import { SearchBox } from '@/components/SearchBox';
+import { MovieCard } from "@/components/MovieCard";
 
 export function Sidebar() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);

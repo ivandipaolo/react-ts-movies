@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { toggleFavoriteMovie } from '@/redux/slices/favoriteMoviesSlice';
-import { useEffect, useState } from 'react';
-import React from 'react';
 
 interface Props {
   movieId?: number;

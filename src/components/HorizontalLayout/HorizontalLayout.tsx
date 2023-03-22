@@ -1,4 +1,4 @@
-import { MovieCard } from "../MovieCard";
+import { MovieCard } from "@/components/MovieCard";
 import { useState, useEffect, useRef } from 'react';
 
 type HorizontalLayoutProps = {

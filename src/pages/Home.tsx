@@ -3,12 +3,12 @@ import { useQuery } from '@apollo/client';
 
 import { addMovies } from '@/redux/slices/availableMoviesSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { GetAvailableMoviesDocument, Movie } from '@/graphql/queries';
 
+import { SearchSection } from '@/components/SearchSection';
 import { CategorySection } from '@/components/CategorySection';
 import { LatestReleasesSection } from '@/components/LatestReleasesSection';
-import { SearchSection } from '@/components/SearchSection';
 
-import { GetAvailableMoviesDocument, Movie } from '@/graphql/queries';
 
 export const Home = () => {
   const searchedMovies = useAppSelector((state) => state.searchedMovies.value)
