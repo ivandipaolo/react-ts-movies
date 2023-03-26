@@ -45,10 +45,12 @@ export function Sidebar() {
       <div className="fixed z-50 top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 no-scrollbar">
         <div className="text-gray-100 text-xl">
           <div className="p-2.5 mt-1 flex items-center gap-2">
-            <img 
-            className="w-10"
-            src="https://images.squarespace-cdn.com/content/v1/546bda42e4b02689ea84e659/1434908135361-GF5OZKCX107Q6XNSVZAS/vietnamwarfilm?format=1000w" 
-            alt="logo" />
+            <Link to="/">
+              <img 
+              className="w-10"
+              src="https://images.squarespace-cdn.com/content/v1/546bda42e4b02689ea84e659/1434908135361-GF5OZKCX107Q6XNSVZAS/vietnamwarfilm?format=1000w" 
+              alt="logo" />
+            </Link>
             <h1 className="font-bold text-gray-200 text-[15px] mx-5">Movies Center</h1>
             <button className="toggle-dark" onClick={handleDarkModeToggle}>
               {

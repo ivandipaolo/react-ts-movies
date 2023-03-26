@@ -96,7 +96,7 @@ export function HorizontalLayout({title, listedIds}: HorizontalLayoutProps) {
   }
 
   return (
-    <div className="flex flex-col m-auto p-auto mb-2">
+    <div className="flex flex-col m-auto p-auto">
       {
         title
         ? <h1 className="flex py-4 lg:px-3 md:px-10 sm:px-2 lg:mx-8 md:mx-10 mx-5 font-bold text-2xl lg:text-4xl dark:text-white text-gray-700">
