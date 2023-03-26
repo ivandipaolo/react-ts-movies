@@ -2,11 +2,11 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/redux/store'
 
 interface SelectedMovieState {
-  value: number | null
+  value: number
 }
 
 const initialState: SelectedMovieState = {
-  value: null,
+  value: 0,
 }
 
 export const selectedMovieSlice = createSlice({

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import Select from 'react-select';
-
 import { useAppSelector } from '@/redux/hooks';
+
+import Select from 'react-select';
 import { HorizontalLayout } from '@/components/HorizontalLayout';
 
 interface CategoryOption {
@@ -14,7 +14,7 @@ export const CategorySection = () => {
   // while movies genres cant be null.
   // [GraphQL error]: Message: Cannot return null for non-nullable field Movie.genres.
   // Location: [object Object], Path: nowPlayingMovies,movies,0,genres
-  const availableGenres = useAppSelector((state) => state.detailedMovies.value)
+  const availableMoviesWGenres = useAppSelector((state) => state.detailedMovies.value)
   const allAvailableMovies = useAppSelector((state) => state.availableMovies.value)
   const selectedCategoryInitialState = {label: 'Select a Genre', value: 'All'};
 
@@ -22,23 +22,25 @@ export const CategorySection = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(selectedCategoryInitialState);
   const [moviesWithGenreIds, setMoviesWithGenreIds] = useState<number[]>(allAvailableMovies);
   
-  // const genres = useAppSelector((state) => state.genres.value)
-  const uniqueGenres = Array.from(new Set(availableGenres.map((movie) => movie.genres).flat()))
+  const uniqueGenres = Array.from(new Set(availableMoviesWGenres.map((movie) => movie.genres).flat()))
 
   useEffect(() => {
+    setIsVisible(true);
+    setMoviesWithGenreIds(allAvailableMovies.map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value));
+  }, [allAvailableMovies]);
+  
+  const handleCategoryChange = (selectedOption: CategoryOption | null) => {
+    selectedOption ? setSelectedCategory(selectedOption) : setSelectedCategory(selectedCategoryInitialState);
     if (selectedCategory.value !== 'All') {
-      setMoviesWithGenreIds(availableGenres.filter((movie) => movie.genres.includes(selectedCategory.value)).map((movie) => movie.id))
+      setMoviesWithGenreIds(availableMoviesWGenres.filter((movie) => movie.genres.includes(selectedCategory.value)).map((movie) => movie.id))
     } else {
       setMoviesWithGenreIds(allAvailableMovies.map(value => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allAvailableMovies, selectedCategory])
-  
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  }
 
   return (
     <div className={`duration-300 ease-in-out transform transition-all" ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
@@ -49,9 +51,10 @@ export const CategorySection = () => {
         className="lg:max-w-2xl w-3/4 lg:ml-10 sm:ml-1 ml-2 p-auto"
         options={uniqueGenres.map((genre) => ({ label: genre, value: genre})).sort((a, b) => a.label.localeCompare(b.label))}
         value={selectedCategory}
-        onChange={(selectedOption: CategoryOption | null) => {selectedOption ? setSelectedCategory(selectedOption) : setSelectedCategory(selectedCategoryInitialState)}}
+        onChange={handleCategoryChange}
       />
       <HorizontalLayout listedIds={moviesWithGenreIds} />
     </div>
   );
 };
+
