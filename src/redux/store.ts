@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import detailedMoviesSlice from '@/redux/slices/detailedMoviesSlice';
 import moviesSlice from '@/redux/slices/availableMoviesSlice';
+import detailedMoviesSlice from '@/redux/slices/detailedMoviesSlice';
 import selectedMovieSlice from '@/redux/slices/selectedMovieSlice';
 import searchedMoviesSlice from '@/redux/slices/searchedMoviesSlice';
-import favoriteMoviesSlice from './slices/favoriteMoviesSlice';
+import favoriteMoviesSlice from '@/redux/slices/favoriteMoviesSlice';
 
 export const store = configureStore({
   reducer: {

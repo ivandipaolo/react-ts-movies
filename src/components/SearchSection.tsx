@@ -1,6 +1,7 @@
 import { useAppSelector } from '@/redux/hooks';
+
+import { RelatedMovies } from '@/components/RelatedMovies';
 import { HorizontalLayout } from '@/components/HorizontalLayout';
-import { RelatedMovies } from './RelatedMovies';
 
 export const SearchSection: React.FC = () => {
   const searchedMovies = useAppSelector(state => state.searchedMovies.value);

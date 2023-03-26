@@ -1,9 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useMediaQuery } from '@react-hook/media-query';
-
+import { useMediaQuery } from "@react-hook/media-query";
+import { MovieDetails } from "@/pages/MovieDetails";
 import { Home } from "@/pages/Home";
-import { MovieDetails } from './pages/MovieDetails';
-import { Navbar } from '@/components/NavBar';
+import { Navbar } from "@/components/NavBar";
 import { Sidebar } from "@/components/SideBar";
 
 function App(): JSX.Element {

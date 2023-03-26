@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Transition } from "@headlessui/react";
-import SearchBox from './SearchBox';
+
 import { Link } from "react-router-dom";
+import { Transition } from "@headlessui/react";
 import { useAppSelector } from '@/redux/hooks';
-import { HorizontalLayout } from './HorizontalLayout';
+
+import { SearchBox } from '@/components/SearchBox';
+import { HorizontalLayout } from '@/components/HorizontalLayout';
+
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)

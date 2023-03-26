@@ -7,7 +7,7 @@ import { GetMovieByIdDocument, GetMovieByIdQuery, GetMovieByIdQueryVariables, Mo
 import { addDetailedMovie } from '@/redux/slices/detailedMoviesSlice';
 import { setSelectSelectedMovie } from '@/redux/slices/selectedMovieSlice';
 import { useAppDispatch } from '@/redux/hooks'
-import { FavoriteStar } from '../FavoriteStar';
+import { FavoriteStar } from '@/components/FavoriteStar';
 
 type MovieCardProps = {
   movieId: number;

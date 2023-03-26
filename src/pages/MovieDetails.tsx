@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 import { useAppSelector } from '@/redux/hooks';
-import { Genres, GetMovieDetailsDocument, GetMovieDetailsQuery, GetMovieDetailsQueryVariables, Movie } from '@/graphql/queries';
 import { RelatedMovies } from '@/components/RelatedMovies';
 import { FavoriteStar } from '@/components/FavoriteStar';
+import { Genres, GetMovieDetailsDocument, GetMovieDetailsQuery, GetMovieDetailsQueryVariables, Movie } from '@/graphql/queries';
 
 export const MovieDetails = () => {
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value);
