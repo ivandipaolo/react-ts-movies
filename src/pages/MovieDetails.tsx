@@ -10,8 +10,7 @@ import { Genres, GetMovieDetailsDocument, GetMovieDetailsQuery, GetMovieDetailsQ
 export const MovieDetails = () => {
   const selectedMovieId = useAppSelector((state) => state.selectedMovie.value);
   const { loading, error, data } = useQuery<GetMovieDetailsQuery, GetMovieDetailsQueryVariables>(GetMovieDetailsDocument, {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    variables: { movieId: selectedMovieId!}
+    variables: { movieId: selectedMovieId}
   });
 
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ export const MovieDetails = () => {
   const movie: Partial<Movie> | undefined | null = movieDetail;
 
   useEffect(() => {
-    if (selectedMovieId === null) {
+    if (selectedMovieId === 0) {
       navigate('/');
     }
   }, [selectedMovieId, navigate]);

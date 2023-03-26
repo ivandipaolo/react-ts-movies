@@ -67,7 +67,7 @@ export function Sidebar() {
             <span className="text-[15px] ml-4 text-gray-200 font-bold">Home</span>
           </div>
         </Link>
-        {selectedMovieId &&
+        {selectedMovieId != 0 &&
           <Link to="/movieDetails">
             <div
               className='p-2.5 mt-3 flex w-full ml-4 justify-start items-start flex-col rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white'>
