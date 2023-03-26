@@ -72,7 +72,7 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
             </div>
               <>
                 <div className="absolute w-full flex place-content-center mt-[5rem]">
-                  <p className="text-xs font-sans w-full p-2 text-white">{movie?.overview?.substring(0,195)}{movie?.overview && movie?.overview.length > 195 ? '...' : ''}</p>
+                  <p className="text-xs font-sans w-full p-2 text-white">{movie?.overview?.substring(0,120)}{movie?.overview && movie?.overview.length > 120 ? '...' : ''}</p>
                 </div>
                 <div className='absolute right-5 bottom-12'>
                   <FavoriteStar movieId={movieId}/>

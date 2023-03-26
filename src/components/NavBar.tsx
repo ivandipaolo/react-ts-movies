@@ -58,7 +58,7 @@ export const Navbar = () => {
                   </div>
                 </>
               }
-              {selectedMovieId &&
+              {selectedMovieId !== 0 &&
               <Link
                 to="/movieDetails"
                 className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
