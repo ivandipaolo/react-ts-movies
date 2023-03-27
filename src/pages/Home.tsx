@@ -1,25 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
 import { useQuery } from '@apollo/client';
-import { addMovies } from '@/redux/slices/availableMoviesSlice';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { GetAvailableMoviesDocument, Movie } from '@/graphql/queries';
 
+import { AppContext } from '@/context/AppContext';
 import { SearchSection } from '@/components/SearchSection';
 import { CategorySection } from '@/components/CategorySection';
 import { LatestReleasesSection } from '@/components/LatestReleasesSection';
 
 export const Home = () => {
-  const searchedMovies = useAppSelector((state) => state.searchedMovies.value);
-  const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value);
-  const dispatch = useAppDispatch();
   const availableMoviesIds = useRef<number[]>([]);
   const { loading, error, data } = useQuery(GetAvailableMoviesDocument);
+
+  const { state, dispatch } = useContext(AppContext);
+  const { searchedMovies, favoriteMovies } = state;
 
   useEffect(() => {
     if (!loading && !error && data) {
       availableMoviesIds.current = (data.nowPlayingMovies.concat(data.popularMovies)).map((movie: Movie) => movie.id);
-      dispatch(addMovies(availableMoviesIds.current));
+      dispatch({type: 'SET_AVAILABLE_MOVIES', payload: availableMoviesIds.current});
     }
   }, [loading, error, data, dispatch]);
 
@@ -27,7 +26,7 @@ export const Home = () => {
 
   return (
     <div>
-      {searchedMovies.movies.length > 0 || (searchedMovies.noResults && favoriteMovies[0]) ? (
+      {searchedMovies.value.movies.length > 0 || (searchedMovies.value.noResults && favoriteMovies.value[0]) ? (
         <SearchSection />
       ) : (
         <LatestReleasesSection />

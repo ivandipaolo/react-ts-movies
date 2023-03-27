@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
-import { useState } from 'react';
-import { useAppSelector } from "@/redux/hooks";
+import { useContext, useState } from 'react';
 
 import { SearchBox } from '@/components/SearchBox';
 import { MovieCard } from "@/components/MovieCard";
+import { AppContext } from "@/context/AppContext";
 
 export function Sidebar() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
-  const detailedMovies = useAppSelector((state) => state.detailedMovies.value)
-  const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value)
+
+  const { state } = useContext(AppContext);
+  const { selectedMovie, detailedMovies, favoriteMovies } = state;
 
   const toggleSubMenu = () => {
     setIsSubMenuOpen(!isSubMenuOpen);
@@ -69,12 +69,12 @@ export function Sidebar() {
             <span className="text-[15px] ml-4 text-gray-200 font-bold">Home</span>
           </div>
         </Link>
-        {selectedMovieId != 0 &&
+        {selectedMovie.value != 0 &&
           <Link to="/movieDetails">
             <div
               className='p-2.5 mt-3 flex w-full ml-4 justify-start items-start flex-col rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white'>
               <span className="text-[15px] text-gray-200 font-bold">Movie Details</span>
-              <span className='text-xs truncate'>{detailedMovies.find((movie) => movie.id === selectedMovieId)?.name}</span>
+              <span className='text-xs truncate'>{detailedMovies.value.find((movie) => movie.id === selectedMovie.value)?.name}</span>
             </div>
           </Link>
         }
@@ -83,7 +83,7 @@ export function Sidebar() {
           className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
           onClick={toggleSubMenu}>
           <div className="flex justify-between text-center w-full items-center">
-            <span className="text-[15px] ml-4 text-gray-200 font-bold">{`Favorite Movies ${favoriteMovies.length > 0 ? `(${favoriteMovies.length})` : ''} `} </span>
+            <span className="text-[15px] ml-4 text-gray-200 font-bold">{`Favorite Movies ${favoriteMovies.value.length > 0 ? `(${favoriteMovies.value.length})` : ''} `} </span>
             <span className='text-sm'>
               <svg
                 className="block h-6 w-6"
@@ -100,8 +100,8 @@ export function Sidebar() {
         <div 
           className={`flex flex-col text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold gap-2 ${isSubMenuOpen ? "" : "hidden"}`}
           id="submenu">
-            { favoriteMovies.length > 0 
-              ? favoriteMovies.map((movie) => (
+            { favoriteMovies.value.length > 0 
+              ? favoriteMovies.value.map((movie) => (
                 <div key={movie.id} className="p-3 bg-gray-800 duration-300 hover:bg-gray-600 bg-opacity-95 rounded-md pb-5">
                   <MovieCard movieId={movie.id} detailed={false}/>
                 </div>

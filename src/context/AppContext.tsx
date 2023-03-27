@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import { availableMoviesReducer, detailedMoviesReducer, favoriteMoviesReducer, searchedMoviesReducer, selectedMovieReducer } from './reducers';
-
+  
 type InitialStateType = {
   selectedMovie: { value: number },
   availableMovies: { value: number[] },
@@ -12,7 +12,7 @@ type InitialStateType = {
     }
   },
   detailedMovies: {
-      value: {
+    value: {
       id: number,
       name: string,
       genres: string[]
@@ -20,6 +20,7 @@ type InitialStateType = {
   }
 }
 
+export type ContextStates = keyof InitialStateType; 
 
 const initialState: InitialStateType = {
   selectedMovie:{ value: 0 },

@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { useQuery } from '@apollo/client';
-import { useAppSelector } from '@/redux/hooks';
 import { 
     GetSimilarMoviesDocument,
     GetSimilarMoviesQuery,
@@ -9,6 +8,7 @@ import {
   } from '@/graphql/queries';
 
 import { HorizontalLayout } from '@/components/HorizontalLayout';
+import { AppContext } from '@/context/AppContext';
 
 type RelatedMoviesProps = {
   movieId?: number
@@ -17,10 +17,10 @@ type RelatedMoviesProps = {
 
 export function RelatedMovies({movieId, title = ""}: RelatedMoviesProps): JSX.Element {
   const [listOfIds, setListOfIds] = useState<number[]>([])
-  const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
-
+  const { state } = useContext(AppContext);
+  const { selectedMovie } = state;
   const { loading, error, data } = useQuery<GetSimilarMoviesQuery, GetSimilarMoviesQueryVariables>(GetSimilarMoviesDocument, {
-    variables: { movieId: movieId || selectedMovieId || 0 }
+    variables: { movieId: movieId || selectedMovie.value || 0 }
   });
 
   useEffect(() => {

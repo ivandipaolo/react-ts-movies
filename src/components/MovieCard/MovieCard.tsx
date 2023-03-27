@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client'
 import { GetMovieByIdDocument, GetMovieByIdQuery, GetMovieByIdQueryVariables, Movie } from '@/graphql/queries';
 
-import { addDetailedMovie } from '@/redux/slices/detailedMoviesSlice';
-import { setSelectSelectedMovie } from '@/redux/slices/selectedMovieSlice';
-import { useAppDispatch } from '@/redux/hooks'
 import { FavoriteStar } from '@/components/FavoriteStar';
+import { AppContext } from '@/context/AppContext';
 
 type MovieCardProps = {
   movieId: number;
@@ -18,23 +16,23 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
   const { loading, error, data } = useQuery<GetMovieByIdQuery, GetMovieByIdQueryVariables>(GetMovieByIdDocument, {
     variables: { movieId }
   });
+  const { dispatch } = useContext(AppContext);
 
   const movieDetail = data?.movieDetail;
   const movie: Partial<Movie> | undefined | null = movieDetail;
-  const dispatch = useAppDispatch()
   const navigate = useNavigate();
 
   useEffect(() => {
     if (movie?.id && movie?.genres && movie?.title) {
       const payload = { id: movie.id, genres: movie.genres?.map((genre) => genre ? genre.name : ''), name: movie.title };
-      dispatch(addDetailedMovie(payload));
+      dispatch({ type:"SET_SELECTED_MOVIE" ,payload });
     }
   }, [data, dispatch, movie]);
 
   const handleSelectedMovie = (event: React.MouseEvent) => {
     event.preventDefault();
     if (movie?.id) {
-      dispatch(setSelectSelectedMovie(movie.id))
+      dispatch({ type: 'SET_SELECTED_MOVIE', payload: { value: movie.id }})
       navigate('/movieDetails')
     }
   }

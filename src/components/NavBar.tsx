@@ -1,21 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react'
 
 import { Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
-import { useAppSelector } from '@/redux/hooks';
 
-import { SearchBox } from '@/components/SearchBox';
 import { HorizontalLayout } from '@/components/HorizontalLayout';
+import { SearchBox } from '@/components/SearchBox';
+import { AppContext } from '@/context/AppContext';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const selectedMovieId = useAppSelector((state) => state.selectedMovie.value)
-  const detailedMovies = useAppSelector((state) => state.detailedMovies.value)
-  const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value)
+  const { state } = useContext(AppContext);
+  const { selectedMovie, detailedMovies, favoriteMovies } = state;
 
   useEffect(() => {
     setIsMenuOpen(false)
-  }, [selectedMovieId])
+  }, [selectedMovie])
   
 
   const menuIconPaths = {
@@ -48,17 +47,17 @@ export const Navbar = () => {
         leaveTo="opacity-0 scale-95">
           <div className="bottom-2 z-50">
             <div className="z-50 px-2 pt-2 flex flex-col pb-3 space-y-1 sm:px-3">
-              {favoriteMovies.length > 0 &&
+              {favoriteMovies.value.length > 0 &&
                 <>
                   <h1 className='text-white text-m text-start font-medium'>
-                    Your favorite movie{favoriteMovies.length > 1 && 's'}:
+                    Your favorite movie{favoriteMovies.value.length > 1 && 's'}:
                   </h1>
                   <div className='overflow-auto'>
-                    <HorizontalLayout listedIds={favoriteMovies.map(movie => movie.id)} />
+                    <HorizontalLayout listedIds={favoriteMovies.value.map(movie => movie.id)} />
                   </div>
                 </>
               }
-              {selectedMovieId !== 0 &&
+              {selectedMovie.value !== 0 &&
               <Link
                 to="/movieDetails"
                 className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm text-end font-medium">
@@ -66,7 +65,7 @@ export const Navbar = () => {
                   className="w-full flex flex-row justify-between items-center align-middle"
                   onClick={() => setIsMenuOpen(!isMenuOpen)}>
                   <span className="text-xs text-center py-1">
-                    {detailedMovies.find((movie) => movie.id === selectedMovieId)?.name}
+                    {detailedMovies.value.find((movie) => movie.id === selectedMovie.value)?.name}
                   </span>
                   <span>
                     Movie Details
