@@ -2,19 +2,19 @@ import {
   useState,
   ChangeEvent,
   FormEvent,
-  useEffect 
+  useEffect, 
+  useContext
 } from 'react';
   
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { setSearchMovies } from '@/redux/slices/searchedMoviesSlice';
+import { AppContext } from '@/context/AppContext';
 
 export const SearchBox = () => {
   const [query, setQuery] = useState('');
   const [filteredMovies, setFilteredMovies] = useState<number[]>([]);
-  const dispatch = useAppDispatch();
-  const availableMovies = useAppSelector(state => state.detailedMovies.value);
   const navigate = useNavigate();
+  const { state, dispatch } = useContext(AppContext);
+  const { detailedMovies: { value: availableMovieValue } } = state;
 
   const noResultsFound = query.length > 0 && filteredMovies.length === 0;
 
@@ -29,7 +29,7 @@ export const SearchBox = () => {
 
     if (value.length > 0) {
       setFilteredMovies(
-        availableMovies
+        availableMovieValue
           .filter((movie) =>
             movie.name.toLowerCase().includes(value.toLowerCase())
           )
@@ -41,7 +41,7 @@ export const SearchBox = () => {
   };
 
   useEffect(() => {
-    dispatch(setSearchMovies({movies: filteredMovies, noResults: noResultsFound}));
+    dispatch({type:'SET_SEARCHED_MOVIES', payload: {movies: filteredMovies, noResults: noResultsFound}});
   }, [dispatch, filteredMovies, noResultsFound]);
 
   return (

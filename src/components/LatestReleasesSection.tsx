@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
-
-import { useAppSelector } from "@/redux/hooks";
+import { useContext, useEffect, useState } from 'react';
 
 import { HorizontalLayout } from "@/components/HorizontalLayout";
+import { AppContext } from '@/context/AppContext';
 
 export function LatestReleasesSection(): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);
   const [latestMovies, setLatestMovies] = useState<number[]>([]);
-  const availableMovies = useAppSelector((state) => state.availableMovies.value)
+
+  const { state } = useContext(AppContext);
+  const { availableMovies } = state;
 
   useEffect(() => {
-    setLatestMovies(availableMovies);
+    setLatestMovies(availableMovies.value);
   }, [availableMovies])
   
 

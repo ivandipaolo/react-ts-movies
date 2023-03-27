@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { useAppSelector, useAppDispatch } from '@/redux/hooks';
-import { toggleFavoriteMovie } from '@/redux/slices/favoriteMoviesSlice';
+import { AppContext } from '@/context/AppContext';
 
 interface Props {
   movieId?: number;
@@ -9,20 +8,21 @@ interface Props {
 }
 
 export const FavoriteStar= ({ movieId, width}: Props) => {
-  const favoriteMovies = useAppSelector((state) => state.favoriteMovies.value);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
+
+  const { state, dispatch } = useContext(AppContext);
+  const { favoriteMovies } = state;
 
   useEffect(() => {
-    setIsFavorite(favoriteMovies.some((favMovie) => favMovie.id === movieId))
-  }, [favoriteMovies, movieId]);
+    setIsFavorite(favoriteMovies.value.some((favMovie) => favMovie.id === movieId))
+  }, [favoriteMovies.value, movieId]);
   
   const handleAddToFavorites = (event: React.MouseEvent) => {
     event.preventDefault()
     event.stopPropagation()
     if (movieId) {
       setIsFavorite(!isFavorite);
-      dispatch(toggleFavoriteMovie({ id: movieId }));
+      dispatch({type: 'TOGGLE_FAVORITE_MOVIE', payload: { id: movieId }});
     }
   };
 

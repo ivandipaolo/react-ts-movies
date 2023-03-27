@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useAppSelector } from '@/redux/hooks';
+import { useState, useEffect, useContext } from 'react';
 
 import Select from 'react-select';
+import { AppContext } from '@/context/AppContext';
 import { HorizontalLayout } from '@/components/HorizontalLayout';
 
 interface CategoryOption {
@@ -14,29 +14,30 @@ export const CategorySection = () => {
   // while movies genres cant be null.
   // [GraphQL error]: Message: Cannot return null for non-nullable field Movie.genres.
   // Location: [object Object], Path: nowPlayingMovies,movies,0,genres
-  const availableMoviesWGenres = useAppSelector((state) => state.detailedMovies.value)
-  const allAvailableMovies = useAppSelector((state) => state.availableMovies.value)
   const selectedCategoryInitialState = {label: 'Select a Genre', value: 'All'};
+
+  const { state } = useContext(AppContext);
+  const { detailedMovies, availableMovies } = state;
 
   const [isVisible, setIsVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryOption>(selectedCategoryInitialState);
-  const [moviesWithGenreIds, setMoviesWithGenreIds] = useState<number[]>(allAvailableMovies);
+  const [moviesWithGenreIds, setMoviesWithGenreIds] = useState<number[]>(availableMovies.value);
   
-  const uniqueGenres = Array.from(new Set(availableMoviesWGenres.map((movie) => movie.genres).flat()))
+  const uniqueGenres = Array.from(new Set(detailedMovies.value.map((movie) => movie.genres).flat()))
 
   useEffect(() => {
     setIsVisible(true);
-    setMoviesWithGenreIds(allAvailableMovies.map(value => ({ value, sort: Math.random() }))
+    setMoviesWithGenreIds(availableMovies.value.map(value => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value));
-  }, [allAvailableMovies]);
+  }, [availableMovies.value]);
   
   const handleCategoryChange = (selectedOption: CategoryOption | null) => {
     selectedOption ? setSelectedCategory(selectedOption) : setSelectedCategory(selectedCategoryInitialState);
     if (selectedCategory.value !== 'All') {
-      setMoviesWithGenreIds(availableMoviesWGenres.filter((movie) => movie.genres.includes(selectedCategory.value)).map((movie) => movie.id))
+      setMoviesWithGenreIds(detailedMovies.value.filter((movie) => movie.genres.includes(selectedCategory.value)).map((movie) => movie.id))
     } else {
-      setMoviesWithGenreIds(allAvailableMovies.map(value => ({ value, sort: Math.random() }))
+      setMoviesWithGenreIds(availableMovies.value.map(value => ({ value, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .map(({ value }) => value));
     }

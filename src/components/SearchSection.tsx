@@ -1,20 +1,23 @@
-import { useAppSelector } from '@/redux/hooks';
+import { useContext } from 'react';
 
 import { RelatedMovies } from '@/components/RelatedMovies';
 import { HorizontalLayout } from '@/components/HorizontalLayout';
+import { AppContext } from '@/context/AppContext';
 
 export const SearchSection: React.FC = () => {
-  const searchedMovies = useAppSelector(state => state.searchedMovies.value);
-  const favoriteMovies = useAppSelector(state => state.favoriteMovies.value);
+
+  const { state } = useContext(AppContext);
+  const { searchedMovies, favoriteMovies } = state;
+
   return (
     <div>
       { 
-        (favoriteMovies[0] && searchedMovies.noResults) &&
-          <RelatedMovies title="Based on your favorites:" movieId={favoriteMovies[0].id}/>
+        (favoriteMovies.value[0] && searchedMovies.value.noResults) &&
+          <RelatedMovies title="Based on your favorites:" movieId={favoriteMovies.value[0].id}/>
       }
       {
-        searchedMovies.movies.length > 0 
-        ? <HorizontalLayout title={`Results for your search:`} listedIds={searchedMovies.movies} />
+        searchedMovies.value.movies.length > 0 
+        ? <HorizontalLayout title={`Results for your search:`} listedIds={searchedMovies.value.movies} />
         : <></>
       }
     </div>

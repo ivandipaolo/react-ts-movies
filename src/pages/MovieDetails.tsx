@@ -1,16 +1,17 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import { useAppSelector } from '@/redux/hooks';
 import { RelatedMovies } from '@/components/RelatedMovies';
 import { FavoriteStar } from '@/components/FavoriteStar';
 import { Genres, GetMovieDetailsDocument, GetMovieDetailsQuery, GetMovieDetailsQueryVariables, Movie } from '@/graphql/queries';
+import { AppContext } from '@/context/AppContext';
 
 export const MovieDetails = () => {
-  const selectedMovieId = useAppSelector((state) => state.selectedMovie.value);
+  const { state } = useContext(AppContext);
+  const { selectedMovie } = state;
   const { loading, error, data } = useQuery<GetMovieDetailsQuery, GetMovieDetailsQueryVariables>(GetMovieDetailsDocument, {
-    variables: { movieId: selectedMovieId}
+    variables: { movieId: selectedMovie.value}
   });
 
   const navigate = useNavigate();
@@ -18,10 +19,10 @@ export const MovieDetails = () => {
   const movie: Partial<Movie> | undefined | null = movieDetail;
 
   useEffect(() => {
-    if (selectedMovieId === 0) {
+    if (selectedMovie.value === 0) {
       navigate('/');
     }
-  }, [selectedMovieId, navigate]);
+  }, [selectedMovie.value, navigate]);
 
   if (loading) {
     return <div className={`flex flex-col md:flex-row bg-gray-200 dark:bg-gray-800 lg:w-[90%] h-[90%] m-0 p-6 lg:p-5 ${movie ? 'grow' : 'animate-pulse'}`}></div>;
@@ -39,7 +40,7 @@ export const MovieDetails = () => {
           <div className="w-full md:w-3/6 mt-2 md:mt-4 space-y-4 mb-12">
             <div className='flex flex-row gap-3 text-center justify-center bg-gray-800 rounded-md lg:p-2'>
               <h1 className="text-3xl lg:text-5xl font-semibold capitalize text-center text-white">{movie?.title}</h1>
-              <FavoriteStar width={30} movieId={selectedMovieId || undefined}/>
+              <FavoriteStar width={30} movieId={selectedMovie.value || undefined}/>
             </div>
             <div className="flex items-start justify-center gap-3">
             {movie?.genres?.map((genre: Genres | null, i: number) => 
