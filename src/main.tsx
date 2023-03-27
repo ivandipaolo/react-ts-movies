@@ -7,6 +7,7 @@ import createApolloClient from '@/apolloClient';
 
 import '@/index.css'
 import App from "@/App";
+import { AppProvider } from "./context/AppContext";
 
 const client = createApolloClient();
 
@@ -16,11 +17,13 @@ const root = createRoot(rootElement);
 
 
 root.render(
-    <React.StrictMode>
-      <ApolloProvider client={client}>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </ApolloProvider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <ApolloProvider client={client}>
+      <AppProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
+      </AppProvider>
+    </ApolloProvider>
+  </React.StrictMode>
 );
