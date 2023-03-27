@@ -67,7 +67,7 @@ export const MovieDetails = () => {
               </svg>
               <span className="mx-2 w-72 truncate dark:text-white text-gray-800">{movie?.release_date}</span>
             </div>
-            <RelatedMovies />
+            <RelatedMovies movieId={selectedMovie.value}/>
           </div>
         </div>
       </div>
