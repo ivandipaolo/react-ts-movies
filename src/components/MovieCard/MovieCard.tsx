@@ -25,7 +25,7 @@ const MovieCard = ({ movieId, detailed = true }: MovieCardProps) => {
   useEffect(() => {
     if (movie?.id && movie?.genres && movie?.title) {
       const payload = { id: movie.id, genres: movie.genres?.map((genre) => genre ? genre.name : ''), name: movie.title };
-      dispatch({ type:"SET_SELECTED_MOVIE" ,payload });
+      dispatch({ type:"ADD_DETAILED_MOVIE", payload});
     }
   }, [data, dispatch, movie]);
 

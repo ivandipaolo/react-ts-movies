@@ -27,6 +27,13 @@ interface SelectedMovieState {
   value: number;
 }
 
+interface SearchMoviesState {
+  value: {
+    movies: number[];
+    noResults: boolean;
+  }
+}
+
 type AvailableMoviesAction = {
   type: 'SET_AVAILABLE_MOVIES';
   payload: number[];
@@ -134,13 +141,6 @@ export const favoriteMoviesReducer = (
       return state;
   }
 };
-
-interface SearchMoviesState {
-  value: {
-    movies: number[];
-    noResults: boolean;
-  }
-}
 
 export const searchedMoviesReducer = (
   state: SearchMoviesState,
